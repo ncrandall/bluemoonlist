@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Category do
 
-	before { @category = Category.new(:name => "plumber") }
+	before { @category = Category.new(name: "plumber") }
 
 	subject { @category }
 
@@ -10,22 +10,20 @@ describe Category do
   it { should_not respond_to :not_an_attr }
   it { should be_valid }
 
-  describe "name shouldn't be empty" do
-  	before { @category.name = "" }
-  	it { should_not be_valid }
-  end
+  describe "name validations" do
+    it "can't be empty" do
+    	@category.name = ""
+    	@category.should_not be_valid
+    end
 
-  describe "name should not exceed max length" do
-  	before { @category.name = "a" * 51 }
-  	it { should_not be_valid }
-  end
+    it "should not exceed max length" do
+    	@category.name = "a" * 51
+    	@category.should_not be_valid
+    end
 
-  describe "name should be unique" do
-  	before do 
-  		@dup = Category.create(:name => @category.name) 
-  	end
-  	
-  	it { should_not be_valid }
+    it "should be unique" do
+    	@dup = Category.create(name: @category.name) 
+    	@category.should_not be_valid
+    end
   end
-
 end
