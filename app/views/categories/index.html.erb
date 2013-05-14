@@ -1,0 +1,11 @@
+<h1>Categories</h1>
+<% @categories.each do |cat| %>
+	<div class="row">
+		<span class="span2"><%= link_to cat.name, cat %></span>
+		<span class="span2">
+			<%= link_to "delete", cat, method: :DELETE %>
+			<%= link_to "edit", edit_category_path(cat.id) %>
+		</span>
+	</div>
+<% end %>
+<%= link_to "Add Category", new_category_path, class: "btn btn-primary" %>
