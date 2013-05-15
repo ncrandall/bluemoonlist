@@ -3,6 +3,7 @@ Bluemoonlist::Application.routes.draw do
   devise_for :users
   get "static/home"
   resources :categories
+  resources :requests, except: [:new]
 
   root :to => "static#home"
   # The priority is based upon order of creation: first created -> highest priority.

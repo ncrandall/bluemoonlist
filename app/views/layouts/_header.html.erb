@@ -1,12 +1,13 @@
 <header class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<span class="pull-left">Bluemoonlist</span>
+				<span class="pull-left"><h3 id="logo"><%= link_to "Bluemoonlist", root_path %></h3></span>
 				<nav>
 					<ul class="nav pull-right">
 						<li><%= link_to "Home", static_home_path %></li>
 						<li><%= link_to "Categories", categories_path %></li>
 						<% if signed_in? %>
+						<li><%= link_to "Requests", requests_path %></li>
 						<li><%= link_to "Sign out", destroy_user_session_path, method: :DELETE %></li>
 						<% else %>
 						<li><%= link_to "Sign In", new_user_session_path %></li>
@@ -15,4 +16,4 @@
 				</nav>
 		</div>
 	</div>
-</nav>
+</header>

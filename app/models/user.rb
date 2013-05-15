@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates :phone, format: { with: PHONE_REGEX }
+  validates :phone, allow_nil: true, format: { with: PHONE_REGEX }
   validates :street, length: { maximum: 100 }
   validates :state, length: { maximum: 2 }
   validates :zip, length: { maximum: 20 }

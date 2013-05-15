@@ -1,0 +1,8 @@
+<h1>Request</h1>
+<p>Status: <%= @request.status %></p>
+<p>Phone: <%= @request.phone %></p>
+<p>Description <%= @request.description %></p>
+Actions:<br />
+<%= link_to "Details", request_path(@request.id), class: "btn btn-primary" %>
+<%= link_to "Cancel", request_path(@request.id), class: "btn btn-error" %>
+<%= link_to "Pause", request_path(@request.id), class: "btn btn-pause" %>

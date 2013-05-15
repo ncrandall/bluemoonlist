@@ -4,6 +4,7 @@ class Request < ActiveRecord::Base
 	# validates :status, inclusion: { in: STATUS }
 	validates :description, length: { maximum: 140 }
 	validates :status, presence: true
+	validates :phone, presence: true, format: { with: PHONE_REGEX }
 
 	def status
 		STATUS.key(read_attribute(:status))

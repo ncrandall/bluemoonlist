@@ -10,6 +10,8 @@ describe User do
 	it { should respond_to :city }
 	it { should respond_to :state }
 	it { should respond_to :zip }
+	it { should respond_to :phone }
+	it { should be_valid }
 
 	describe "phone validations" do
 		it "should be a valid phone number" do
