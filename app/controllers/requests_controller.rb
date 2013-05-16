@@ -41,6 +41,7 @@ class RequestsController < ApplicationController
 
 
   def call_provider
+    respond_to :xml
   end
 
 
