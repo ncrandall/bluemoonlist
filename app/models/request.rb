@@ -20,4 +20,16 @@ class Request < ActiveRecord::Base
 		end
 	end
 
+	def perform
+		f = File.open("outputs", "a+")
+		f.write("Starting delayed job\n")
+		f.close
+
+		sleep(10)
+
+		f = File.open("outputs", "a+")
+		f.write("Done!");
+		f.close
+	end
+
 end

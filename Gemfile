@@ -7,6 +7,11 @@ gem 'devise', '3.0.0.rc'
 
 gem 'bootstrap-sass', '2.3.1.0'
 
+gem 'delayed_job_active_record', '4.0.0.beta2'
+gem 'daemons'
+
+gem 'twilio-ruby', '3.9.0'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0.rc1'
 

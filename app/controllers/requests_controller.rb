@@ -12,6 +12,9 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
 
     if @request.save
+      #fire off twilio delayed job
+      twilio = TwilioWorker.new
+      twilio.delay.make_call
       flash[:success] = "Request successfully added"
     else
       flash[:error] = "Unable to create Request"
@@ -35,6 +38,11 @@ class RequestsController < ApplicationController
     end
     redirect_to requests_path
   end
+
+
+  def call_provider
+  end
+
 
   private
 
