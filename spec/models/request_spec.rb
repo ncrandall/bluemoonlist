@@ -12,6 +12,7 @@ describe Request do
 	it { should respond_to :status }
 	it { should respond_to :description }
 	it { should respond_to :phone }
+	it { should respond_to :user }
 	it { should be_valid }
 
 	describe "status validations" do

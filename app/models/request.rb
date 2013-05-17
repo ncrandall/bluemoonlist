@@ -6,6 +6,8 @@ class Request < ActiveRecord::Base
 	validates :status, presence: true
 	validates :phone, presence: true, format: { with: PHONE_REGEX }
 
+	belongs_to :user
+
 	def status
 		STATUS.key(read_attribute(:status))
 	end

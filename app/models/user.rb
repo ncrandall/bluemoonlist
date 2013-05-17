@@ -9,4 +9,6 @@ class User < ActiveRecord::Base
   validates :street, length: { maximum: 100 }
   validates :state, length: { maximum: 2 }
   validates :zip, length: { maximum: 20 }
+
+  has_many :requests
 end

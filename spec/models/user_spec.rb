@@ -11,6 +11,7 @@ describe User do
 	it { should respond_to :state }
 	it { should respond_to :zip }
 	it { should respond_to :phone }
+	it { should respond_to :requests }
 	it { should be_valid }
 
 	describe "phone validations" do
