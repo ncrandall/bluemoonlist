@@ -45,6 +45,7 @@ end
 group :test, :development do
 	# Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
+	gem 'factory_girl_rails', '4.2.1'
 end
 
 # Use ActiveModel has_secure_password
