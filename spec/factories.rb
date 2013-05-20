@@ -23,4 +23,16 @@ FactoryGirl.define do
 	factory :category do
 		name "Plumber"
 	end
+
+	factory :twilio_job do
+		name "John Doe"
+		phone "555-555-5555"
+		status 0
+	end
+
+	factory :twilio_contact do
+		name "Joe Plumber"
+		phone "555-555-5555"
+		call_order 0
+	end
 end

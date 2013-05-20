@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130517214457) do
+ActiveRecord::Schema.define(version: 20130520173445) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -67,6 +67,23 @@ ActiveRecord::Schema.define(version: 20130517214457) do
   end
 
   add_index "scores", ["category_id", "provider_id"], name: "index_scores_on_category_id_and_provider_id", unique: true
+
+  create_table "twilio_contacts", force: true do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.integer  "call_order"
+    t.integer  "twilio_job_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "twilio_jobs", force: true do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
