@@ -6,6 +6,8 @@ class TwilioJob < ActiveRecord::Base
   validates :phone, presence: true, format: { with: PHONE_REGEX }
 
   has_many :twilio_contacts
+  # This relationship will be changed to REST call eventually (see class diagram)
+  belongs_to :request
 
   def status=(s)
   	write_attribute(:status, STATUS[s])
@@ -15,4 +17,9 @@ class TwilioJob < ActiveRecord::Base
   	STATUS.key(read_attribute(:status))
   end
 
+  before_validation do
+    if self.id.nil? && self.status.nil?
+      self.status = :active
+    end
+  end
 end

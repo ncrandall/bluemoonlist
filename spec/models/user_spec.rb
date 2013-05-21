@@ -6,6 +6,7 @@ describe User do
 
 	subject { user }
 
+	it { should respond_to :name }
 	it { should respond_to :street }
 	it { should respond_to :city }
 	it { should respond_to :state }
@@ -15,30 +16,27 @@ describe User do
 	it { should be_valid }
 
 	describe "phone validations" do
-		it "should be a valid phone number" do
-			user.phone = "555-55-5555"
-			user.should_not be_valid
-		end
+		before { user.phone = "555-55-5555"}
+		it { should_not be_valid }
 	end
 
-	describe "street validations" do
-		it "should not exceed max length" do
-			user.street = "a" * 101
-			user.should_not be_valid
-		end
+	describe "with an invalid name" do
+		before { user.name = "a" * 101 }
+		it { should_not be_valid }
 	end
 
-	describe "state validations" do
-		it "should only be two chars" do
-			user.state = "CAA"
-			user.should_not be_valid
-		end
+	describe "with an invalid street" do
+		before { user.street = "a" * 101 }
+		it { should_not be_valid }
 	end
 
-	describe "zip validations" do
-    it "shouldn't exceed maximum length" do
-      user.zip = "a" * 21
-      user.should_not be_valid
-    end
+	describe "with an invalid state" do
+		before { user.state = "CAA" }
+		it { should_not be_valid }
+	end
+
+	describe "with an invalid zip" do
+    before { user.zip = "a" * 21 }
+    it { should_not be_valid }
   end
 end

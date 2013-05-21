@@ -20,6 +20,12 @@ FactoryGirl.define do
 		zip "97475"
 	end
 
+	factory :request do
+		description "Plumber"
+		phone '555-555-5555'
+		status :active
+	end
+
 	factory :category do
 		name "Plumber"
 	end
@@ -27,7 +33,6 @@ FactoryGirl.define do
 	factory :twilio_job do
 		name "John Doe"
 		phone "555-555-5555"
-		status 0
 	end
 
 	factory :twilio_contact do

@@ -7,6 +7,8 @@ class Request < ActiveRecord::Base
 	validates :phone, presence: true, format: { with: PHONE_REGEX }
 
 	belongs_to :user
+	# This relationship will be changed to REST call eventually (see class diagram)
+	has_one :twilio_job, dependent: :destroy
 
 	def status
 		STATUS.key(read_attribute(:status))
@@ -21,17 +23,4 @@ class Request < ActiveRecord::Base
 			self.status = :active
 		end
 	end
-
-	def perform
-		f = File.open("outputs", "a+")
-		f.write("Starting delayed job\n")
-		f.close
-
-		sleep(10)
-
-		f = File.open("outputs", "a+")
-		f.write("Done!");
-		f.close
-	end
-
 end
