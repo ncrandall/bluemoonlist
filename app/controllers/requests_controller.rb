@@ -10,8 +10,10 @@ class RequestsController < ApplicationController
 
   def create
     @request = current_user.requests.build(request_params)
-    send_twilio_job(@request) 
+    build_twilio_job(@request) 
     if @request.save
+      twilio_worker = TwilioWorker.new
+      twilio_worker.delay.begin_twilio_job(@request.twilio_job)
       flash[:success] = "Request successfully added"
     else
       flash[:error] = "Unable to create Request"
@@ -37,18 +39,13 @@ class RequestsController < ApplicationController
   end
 
 
-  def call_provider
-    respond_to :xml
-  end
-
-
   private
 
   def request_params
     params.require(:request).permit(:phone, :description)
   end
 
-  def send_twilio_job(request)
+  def build_twilio_job(request)
     twilio_job = request.build_twilio_job(
         name: current_user.name,
         phone: @request.phone,
@@ -60,7 +57,11 @@ class RequestsController < ApplicationController
     providers = Provider.joins(:categories).where(:categories => {name: "Plumber"})
     providers.each do |p|
       cnt += 1
-      twilio_job.twilio_contacts.build(name: p.name, phone: p.phone, call_order: cnt)
+      twilio_job.twilio_contacts.build(
+        name: p.name, 
+        phone: p.phone, 
+        call_order: cnt
+      )
     end
 
     request

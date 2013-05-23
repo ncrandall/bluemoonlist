@@ -11,7 +11,8 @@ describe TwilioJob do
 	it { should respond_to :status }
 	it { should respond_to :name }
 	it { should respond_to :twilio_contacts }
-	it { should respond_to :request}
+	it { should respond_to :request }
+	it { should respond_to :call_sid }
 	it { should be_valid }
 
 	describe "with an invalid number" do
@@ -27,5 +28,10 @@ describe TwilioJob do
 	describe "with an invalid status" do
 		before { twilio_job.status = :not_a_valid_status }
 		it { should be_valid }
+	end
+
+	describe "with an invalid call_sid" do
+		before { twilio_job.call_sid = "a" * 37 }
+		it { should_not be_valid }
 	end
 end

@@ -10,6 +10,8 @@ describe TwilioContact do
 	it { should respond_to :call_order }
 	it { should respond_to :name }
 	it { should respond_to :twilio_job_id }
+	it { should respond_to :contacted }
+	it { should respond_to :accepted }
 	it { should be_valid }
 
 	describe "with an invalid number" do

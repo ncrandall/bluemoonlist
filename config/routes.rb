@@ -4,8 +4,14 @@ Bluemoonlist::Application.routes.draw do
   get "static/home"
   resources :categories
   resources :requests, except: [:new]
-  get "/r/call_provider", to: "requests#call_provider"
   root :to => "static#home"
+
+  # Twilio requests
+  post "/twilio/provider_status_callback", to: "twilio#provider_status_callback"
+  post "/twilio/user_status_callback", to: "twilio#user_status_callback"
+  post "/twilio/provider_twiml", to: "twilio#provider_twiml"
+  post "/twilio/user_twiml", to: "twilio#user_twiml"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
