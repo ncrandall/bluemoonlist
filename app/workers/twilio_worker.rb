@@ -15,39 +15,56 @@ class TwilioWorker
     twilio_job.twilio_contacts.each do |contact|
       if !contact.contacted?
       	# Make a request to Twilio
-        make_call(contact.phone)
+        path = "twilio/provider_twiml/#{contact.id}"
+        call_back_path = "twilio/provider_status_callback"
+        make_call(contact.phone, path, call_back_path)
+
+        # Update the contact to contacted
+        contact.contacted = true
+        contact.save
         return
       end
     end
+
+    #if it gets here terminate TwilioJob. No more contacts exist
+    twilio_job.status = :done
+    twilio_job.save
   end
 
-  # Fire off the call as a delayed job
+  # Fire off the call
   def call_user(twilio_job)
-    url = ""
-    make_call(twilio_job.phone, url)
+    path = "twilio/user_twiml"
+    call_back_path = "twilio/user_status_callback"
+    make_call(twilio_job.phone, path, call_back_path)
   end
 
   # Make a call to the provider and connect the two
   def connect_user_to_provider
-  
+    path = "twilio/user_provider_twiml"
+    call_back_path = "twilio/user_provider_status_callback"
+    make_call(twilo_job.phone, path, call_back_path)
   end
 
 
-  def make_call(to)
+  # Makes a REST call to either the dev twilio clone or
+  # Twilio based on environment
+  def make_call(to, path, call_back_path)
     from = '+14155150551'
-    application_sid = "AP0b3c40b45634d668245976268b23b7c2"
     req_params = {
-      From: from,
-      To: to,
-      ApplicationSid: application_sid
+      from: from,
+      to: to,
+      url: "http://morning-shelf-8847.herokuapp.com/#{path}",
+      status_callback: "http://morning-shelf-8847.herokuapp.com/#{call_back_path}"
     }
 
     if Rails.env == "development"
     	
       url = "http://127.0.0.1:4567/make_call"
+      req_params[:url] = "http://localhost:3000/#{path}"
+      req_params[:status_callback] = "http://localhost:3000/#{call_back_path}"
       RestClient.post url, req_params
     else
-      client = TwilioDev.new
+      client = Twilio::REST::Client.new(ENV["TWILIO_SID"], ENV["TWILIO_TOKEN"])
 
       account = client.account
       call = account.calls.create(req_params)
