@@ -54,7 +54,10 @@ class TwilioWorker
       from: from,
       to: to,
       url: "http://morning-shelf-8847.herokuapp.com/#{path}",
-      status_callback: "http://morning-shelf-8847.herokuapp.com/#{call_back_path}"
+      if_machine: "Hangup",
+      status_callback: "http://morning-shelf-8847.herokuapp.com/#{call_back_path}",
+      timeout: 10
+
     }
 
     if Rails.env == "development"
