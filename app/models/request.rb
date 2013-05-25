@@ -5,6 +5,7 @@ class Request < ActiveRecord::Base
 	validates :description, length: { maximum: 140 }
 	validates :status, presence: true
 	validates :phone, presence: true, format: { with: PHONE_REGEX }
+	validates :user_id, presence: true
 
 	belongs_to :user
 	# This relationship will be changed to REST call eventually (see class diagram)

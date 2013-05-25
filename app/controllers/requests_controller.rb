@@ -1,7 +1,9 @@
 class RequestsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @request = Request.new
-    @requests = Request.all
+    @requests = Request.where(user_id: current_user.id)
   end
 
   def show

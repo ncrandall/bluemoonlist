@@ -16,6 +16,11 @@ describe Request do
 
 	# validations
 
+	describe "without a user id" do
+		before { request.user_id = nil }
+		it { should_not be_valid }
+	end
+
 	describe "when status is initially not valid" do
 		before { request.status = :not_a_key }
 		it { should be_valid }
@@ -31,9 +36,11 @@ describe Request do
 		it { should_not be_valid }
 	end
 
-	describe "when a request is saved" do
-		it "should create a twilio job and contacts" do
-			expect { request.save }.to change(TwilioJob, :count).by(1)
+	describe "when request is destroyed" do
+		before {	FactoryGirl.create(:twilio_job, request: request) }
+
+		it "should delete dependent TwilioJobs" do
+			expect { request.destroy }.to change(TwilioJob, :count).by(-1)
 		end
 	end
 end
