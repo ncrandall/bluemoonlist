@@ -13,6 +13,8 @@ describe User do
 	it { should respond_to :zip }
 	it { should respond_to :phone }
 	it { should respond_to :requests }
+	it { should respond_to :neighbors }
+	it { should respond_to :followers }
 	it { should be_valid }
 
 	describe "phone validations" do
@@ -22,6 +24,11 @@ describe User do
 
 	describe "with an invalid name" do
 		before { user.name = "a" * 101 }
+		it { should_not be_valid }
+	end
+
+	describe "with an empty name" do
+		before { user.name = "" * 101 }
 		it { should_not be_valid }
 	end
 

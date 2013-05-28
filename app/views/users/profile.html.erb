@@ -1,0 +1,12 @@
+<h3><%= @user.name %></h3>
+<input type="submit" value="Follow" /><br /><br />
+<% @requests.each do |r| %>
+	<div class="row">
+		<span class="span4">
+			<%= r.description %>
+		</span>
+		<span class="span8">
+			<%= r.created_at %>
+		</span>
+	</div>
+<% end %>

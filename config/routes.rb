@@ -1,5 +1,7 @@
 Bluemoonlist::Application.routes.draw do
 
+  get "users", to: "users#index"
+  get "users/profile/:id", to: "users#profile", as: :profile
   devise_for :users
   get "static/home"
   resources :categories
