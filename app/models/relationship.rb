@@ -6,4 +6,5 @@ class Relationship < ActiveRecord::Base
 	validates :user_id, presence: true
 	validates :neighbor_id, presence: true
 
+
 end

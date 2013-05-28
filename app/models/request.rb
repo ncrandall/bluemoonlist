@@ -24,4 +24,9 @@ class Request < ActiveRecord::Base
 			self.status = :active
 		end
 	end
+
+	def self.from_users_followed_by(user)
+		select_sql = "SELECT neighbor_id FROM relationships WHERE user_id = :user_id"
+		where("user_id IN (#{select_sql}) OR user_id = :user_id", user_id: user.id)
+	end
 end
