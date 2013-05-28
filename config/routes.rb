@@ -1,8 +1,8 @@
 Bluemoonlist::Application.routes.draw do
 
+  devise_for :users, controllers: { registrations: "registrations"}
   get "users", to: "users#index"
   get "users/profile/:id", to: "users#profile", as: :profile
-  devise_for :users
   get "static/home"
   resources :categories
   resources :requests, except: [:new]

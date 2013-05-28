@@ -12,7 +12,6 @@ describe Request do
 	it { should respond_to :phone }
 	it { should respond_to :user }
 	it { should respond_to :twilio_job }
-	it { should respond_to :from_users_followed_by }
 	it { should be_valid }
 
 	# validations

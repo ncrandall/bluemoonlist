@@ -1,2 +1,58 @@
-<h1>Static#home</h1>
-<p>Find me in app/views/static/home.html.erb</p>
+<div class="row">
+	<span class="span6">
+		<h3>Find a contractor with less work!</h3>
+		<p>
+			Looking for a shuttle ride, a plumber, or a dentist? Tell us and we will have the best professional call you. Sign up for free! 
+		</p>
+		<p>
+			How does it work? 
+			<ol>
+				<li>Sign up for FREE or login with Facebook</li>
+				<li>Enter the service you are looking for</li>
+				<li>Wait for a call</li>
+				<li>Accept or move to the next contractor</li>
+			</ol>
+			
+			We will find the best local professional and when work is done, you may 
+			pay your bill through our portal.
+			
+			It's that simple!
+		</p>
+	</span>
+	<% if !signed_in? %>
+	<span class="offset2 span4">
+		<h4>Sign in</h4>
+		<%= form_for(resource, as: resource_name, url: new_session_path(resource_name)) do |f| %>
+			<p>
+				<%= f.text_field :email, placeholder: :email %>
+			</p>
+			<p>
+				<%= f.password_field :password, placeholder: :password%>
+			</p>
+			<p>
+				<%= f.submit "Log in", class: "btn btn-primary" %>
+			</p>
+
+		<% end %>
+		<h4>Sign up</h4>
+		<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+			<p>
+				<%= f.text_field :email, placeholder: :email%>
+			</p>
+			<p>
+				<%= f.password_field :password, placeholder: :password %>
+			</p>
+			<p>
+				<%= f.password_field :password_confirmation, placeholder: "password confirmation" %>
+			</p>
+			<p>
+				<%= f.text_field :name, placeholder: :name %>
+			</p>
+			<p>
+				<%= f.submit "Sign up", class: "btn btn-primary" %>
+			</p>
+
+		<% end %>
+	</span>
+	<% end %>
+</div>
