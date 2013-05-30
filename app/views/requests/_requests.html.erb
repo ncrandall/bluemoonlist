@@ -1,0 +1,16 @@
+<% @requests.each do |request| %>
+	<div class="row">
+		<span class="post offset2 span8">
+			<%= image_tag("no_pic.jpg") %>
+			<%= request.user.name %> Searched for <%= request.description %><br />
+			<%= request.created_at %>
+			<% if request.user_id == current_user.id %>
+			<span class="options">
+				<%= link_to "Details", request_path(request.id), class: "btn btn-primary" %>
+				<%= link_to "Cancel", request_path(request.id), class: "btn btn-error", method: :DELETE %>
+				<%= link_to "Pause", request_path(request.id), class: "btn btn-pause" %>
+			</span>
+			<% end %>
+		</span>
+	</div>
+<% end %>

@@ -1,30 +1,4 @@
-<h1>Requests</h1>
+<%= render 'request_form' %>
 
-<%= form_for @request do |f| %>
-	<p>
-		<%= f.label :phone %>
-		<%= f.text_field :phone %>
-	</p>
+<%= render 'requests' %>
 
-	<p>
-		<%= f.label :description %>
-		<%= f.text_area :description %>
-	</p>
-
-	<%= f.submit "Request Call", class: "btn btn-primary" %>
-<% end %>
-
-<table class="table">
-	<% @requests.each do |request| %>
-	<tr>
-		<td><%= request.phone %></td>
-		<td><%= request.description %></td>
-		<td><%= request.status %></td>
-		<td class="text-right">
-			<%= link_to "Details", request_path(request.id), class: "btn btn-primary" %>
-			<%= link_to "Cancel", request_path(request.id), class: "btn btn-error", method: :DELETE %>
-			<%= link_to "Pause", request_path(request.id), class: "btn btn-pause" %>
-		</td>
-	</tr>
-	<% end %>
-</table>

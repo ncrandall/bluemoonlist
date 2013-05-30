@@ -12,11 +12,11 @@ describe 'Request Pages' do
 
 	describe 'index page' do
 		before { visit requests_path }
-		it { should have_selector("h1", text: "Requests") }
+		it { should have_selector("h4", text: "What are you looking for?") }
 
 		it "should increment request count" do
-			fill_in "Phone", with: "555-555-5555"
-			fill_in "Description", with: "Find an electrician"
+			fill_in "request_phone", with: "555-555-5555"
+			fill_in "request_description", with: "Find an electrician"
 			expect { click_button 'Request Call' }.to change(Request, :count).by(1)
 		end
 

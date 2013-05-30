@@ -1,7 +1,7 @@
 @import 'bootstrap';
 
-body {
-	padding-top: 60px;
+html, body {
+	height: 100%
 }
 
 #logo {
@@ -9,5 +9,44 @@ body {
 	a:hover {
 		text-decoration: none;
 		color: #0088cc;
+	}
+}
+
+.container-top {
+	padding-top: 60px;
+}
+
+.post {
+	margin-top: 15px;
+	padding: 5px 0px;
+	height: 80px;
+	border-top: 1px solid #ccc;
+	position: relative;
+	.options {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -150px;
+}
+
+#footer {
+	height: 150px;
+	background: #252525;
+	color: #bdbdbd;
+	.horizontal-links div ul{
+		margin: 0;
+		padding: 0;
+		li {
+			float: left;
+			list-style-type: none;
+			padding: 5px 10px 5px 10px;
+		}
 	}
 }

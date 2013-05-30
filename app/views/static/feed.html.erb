@@ -1,0 +1,12 @@
+<%= render 'requests/request_form' %>
+<div class="row">
+	<span class="offset5">
+		display:
+		<% if @filter %>
+			<%= link_to 'all', feed_path %> | mine
+		<% else %>
+		  all | <%= link_to 'mine', "#{feed_path}?filter=self" %>
+		<% end %>
+	</span>
+</div>
+<%= render 'requests/requests' %>
