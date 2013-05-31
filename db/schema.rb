@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20130528030943) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "providers", force: true do |t|
     t.string   "name"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20130528030943) do
     t.datetime "updated_at"
   end
 
-  add_index "relationships", ["user_id", "neighbor_id"], name: "index_relationships_on_user_id_and_neighbor_id", unique: true
+  add_index "relationships", ["user_id", "neighbor_id"], name: "index_relationships_on_user_id_and_neighbor_id", unique: true, using: :btree
 
   create_table "requests", force: true do |t|
     t.integer  "status"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20130528030943) do
     t.integer  "user_id"
   end
 
-  add_index "requests", ["user_id"], name: "index_requests_on_user_id"
+  add_index "requests", ["user_id"], name: "index_requests_on_user_id", using: :btree
 
   create_table "scores", force: true do |t|
     t.float    "score"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20130528030943) do
     t.integer  "category_id"
   end
 
-  add_index "scores", ["category_id", "provider_id"], name: "index_scores_on_category_id_and_provider_id", unique: true
+  add_index "scores", ["category_id", "provider_id"], name: "index_scores_on_category_id_and_provider_id", unique: true, using: :btree
 
   create_table "twilio_contacts", force: true do |t|
     t.string   "name"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20130528030943) do
     t.string   "call_sid"
   end
 
-  add_index "twilio_contacts", ["call_sid"], name: "index_twilio_contacts_on_call_sid", unique: true
+  add_index "twilio_contacts", ["call_sid"], name: "index_twilio_contacts_on_call_sid", unique: true, using: :btree
 
   create_table "twilio_histories", force: true do |t|
     t.string   "call_sid"
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20130528030943) do
     t.string   "call_sid"
   end
 
-  add_index "twilio_jobs", ["call_sid"], name: "index_twilio_jobs_on_call_sid", unique: true
+  add_index "twilio_jobs", ["call_sid"], name: "index_twilio_jobs_on_call_sid", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 20130528030943) do
     t.string   "name"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
