@@ -12,7 +12,7 @@ class RequestsController < ApplicationController
 
   def create
     @request = current_user.requests.build(request_params)
-    build_twilio_job(@request) 
+    @request = build_twilio_job(@request) 
     if @request.save
       twilio_worker = TwilioWorker.new
       twilio_worker.delay.begin_twilio_job(@request.twilio_job)
@@ -50,7 +50,7 @@ class RequestsController < ApplicationController
   def build_twilio_job(request)
     twilio_job = request.build_twilio_job(
         name: current_user.name,
-        phone: @request.phone,
+        phone: request.phone,
         status: 0
     )
 
