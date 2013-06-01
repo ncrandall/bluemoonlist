@@ -7,6 +7,8 @@ gem 'rails', '4.0.0.rc1'
 gem 'pg'
 
 gem 'devise', '3.0.0.rc'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 gem 'bootstrap-sass', '2.3.1.0'
 

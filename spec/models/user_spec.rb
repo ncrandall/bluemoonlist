@@ -8,6 +8,11 @@ describe User do
 	subject { user }
 
 	it { should respond_to :name }
+	it { should respond_to :uid }
+	it { should respond_to :provider }
+
+	it { should respond_to :first_name }
+	it { should respond_to :last_name }
 	it { should respond_to :street }
 	it { should respond_to :city }
 	it { should respond_to :state }
@@ -31,13 +36,13 @@ describe User do
 		it { should_not be_valid }
 	end
 
-	describe "with an invalid name" do
-		before { user.name = "a" * 101 }
+	describe "with an empty first_name" do
+		before { user.first_name = "a" * 101 }
 		it { should_not be_valid }
 	end
 
-	describe "with an empty name" do
-		before { user.name = "" * 101 }
+	describe "with an empty last_name" do
+		before { user.last_name = "a" * 101 }
 		it { should_not be_valid }
 	end
 

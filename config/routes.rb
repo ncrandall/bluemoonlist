@@ -1,6 +1,7 @@
 Bluemoonlist::Application.routes.draw do
 
-  devise_for :users, controllers: { registrations: "registrations"}
+  devise_for :users, controllers: { registrations: "registrations",
+    omniauth_callbacks: "users/omniauth_callbacks" }
   get "/users", to: "users#index"
   get "/users/profile/:id", to: "users#profile", as: :profile
   get "/feed", to: "static#feed", as: :feed
