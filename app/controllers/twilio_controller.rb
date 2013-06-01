@@ -13,6 +13,10 @@ class TwilioController < ApplicationController
   end
 
   def user_twiml
+  	if params[:job_id]
+  		@job = TwilioJob.where(id: params[:job_id]).first
+  		@job.status = :paused
+  	end
   	respond_to :xml
   end
 
@@ -28,18 +32,26 @@ class TwilioController < ApplicationController
 	def provider_status_callback
 		params[:Action] = "Provider_Status_Callback" 
 		history = TwilioHistory.create(history_params)
-		# provider answered
+		contact = TwilioContact.where(call_sid: params[:CallSid]).first
+		contact.contacted = true;
+		contact.save
 
-		# provider didn't answer
+		twilio_worker = TwilioWorker.new
+		if contact.accepted?
+			twilio_worker.delay.call_user(contact.twilio_job)
+		else
+			twilio_worker.delay.update_call_list(contact.twilio_job)
+		end
+
 		respond_to :xml
 	end
 
 	def user_status_callback
 		params[:Action] = "User_Status_Callback"
 		history = TwilioHistory.create(history_params)
-		# user answered
+		
+		# update this when we figure out how to connect the two
 
-		# user didn't answer
 		respond_to :xml
 	end
 
@@ -59,22 +71,19 @@ class TwilioController < ApplicationController
 		params[:Action] = "Provider_Gather"
 		TwilioHistory.create(history_params);
 
-		@contact = TwilioContact.where(call_sid: params[:CallSid]).first
+		contact = TwilioContact.where(call_sid: params[:CallSid]).first
 
-		twilio_worker = TwilioWorker.new
 		
 		if params[:Digits] == '1'
-			@contact.accepted = true
-			@contact.save
-			twilio_worker.delay.call_user(@contact.twilio_job)
-		else
-			twilio_worker.delay.call_next_provider(@contact.twilio_job)
+			contact.accepted = true
+			contact.save
 		end
 
 		respond_to :xml
 	end
 
 	def user_gather
+		# get user decision to connect / continue 
 
 	end
 

@@ -1,34 +1,32 @@
 class TwilioWorker
 	def begin_twilio_job(twilio_job)
 
-		call_next_provider(twilio_job)
+		update_call_list(twilio_job)
 	end
 
   # Update the call list, send to call_next_provider
-  def update_call_list(twilio_job, twilio_contact)
-  	twilio_contact.called = true;
-  	twilio_contact.save
+  def update_call_list(twilio_job, twilio_contact=nil)
+
+    #if !twilio_contact.nil?
+    #	twilio_contact.contacted = true;
+    #	twilio_contact.save
+    #end
+    call_next_provider(twilio_job)
   end
 
   # If there is a next provider sent to call_user
   def call_next_provider(twilio_job)
-    twilio_job.twilio_contacts.each do |contact|
-      if !contact.contacted?
-      	# Make a request to Twilio
-        path = "twilio/provider_twiml/#{contact.id}"
-        call_back_path = "twilio/provider_status_callback"
-        make_call(contact.phone, path, call_back_path)
+    contact = get_next_uncontacted(twilio_job)
 
-        # Update the contact to contacted
-        contact.contacted = true
-        contact.save
-        return
-      end
+    if contact.nil?
+      #if it gets here terminate TwilioJob. No more contacts exist
+      twilio_job.status = :done
+      twilio_job.save
+    else
+      path = "twilio/provider_twiml/#{contact.id}"
+      call_back_path = "twilio/provider_status_callback"
+      make_call(contact.phone, path, call_back_path)
     end
-
-    #if it gets here terminate TwilioJob. No more contacts exist
-    twilio_job.status = :done
-    twilio_job.save
   end
 
   # Fire off the call
@@ -71,6 +69,16 @@ class TwilioWorker
 
       account = client.account
       call = account.calls.create(req_params)
+    end
+  end
+
+  private
+
+  def get_next_uncontacted(twilio_job)
+    twilio_job.twilio_contacts.each do |contact|
+      if !contact.contacted?
+        return contact
+      end
     end
   end
 end
