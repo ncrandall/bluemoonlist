@@ -32,8 +32,8 @@ class User < ActiveRecord::Base
     user = User.where(provider: auth.provider, uid: auth.uid).first
     unless user
       user = User.create(
-        first_name: auth.extra_info.raw_info.first_name,
-        last_name: auth.extra_info.raw_info.last_name,
+        first_name: auth.extra.raw_info.first_name,
+        last_name: auth.extra.raw_info.last_name,
         provider: auth.provider,
         uid: auth.uid,
         email: auth.info.email,
