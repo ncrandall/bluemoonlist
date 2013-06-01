@@ -26,9 +26,8 @@ class TwilioController < ApplicationController
 	# From, To, Sid
 
 	def provider_status_callback
-
-		history = TwilioHistory.new(call_sid: params[:CallSid], action: "Provider_Status_Callback")
-		history.save
+		params[:Action] = "Provider_Status_Callback" 
+		history = TwilioHistory.create(history_params)
 		# provider answered
 
 		# provider didn't answer
@@ -36,9 +35,8 @@ class TwilioController < ApplicationController
 	end
 
 	def user_status_callback
-		
-		history = TwilioHistory.new(call_sid: params[:CallSid], action: "User_Status_Callback")
-		history.save
+		params[:Action] = "User_Status_Callback"
+		history = TwilioHistory.create(history_params)
 		# user answered
 
 		# user didn't answer
@@ -46,9 +44,8 @@ class TwilioController < ApplicationController
 	end
 
 	def user_provider_status_callback
-
-		history = TwilioHistory.new(call_sid: params[:CallSid], action: "User_Provider_Status_Callback")
-		history.save
+		params[:Action] = "User_Provider_Status_Callback"
+		history = TwilioHistory.create(history_params)
 		# connected both parties
 
 	  # couldn't connect parties
@@ -58,6 +55,9 @@ class TwilioController < ApplicationController
 
 	# gather action in Twiml
 	def provider_gather
+
+		params[:Action] = "Provider_Gather"
+		TwilioHistory.create(history_params);
 
 		@contact = TwilioContact.where(call_sid: params[:CallSid]).first
 
@@ -76,5 +76,32 @@ class TwilioController < ApplicationController
 
 	def user_gather
 
+	end
+
+	private 
+	
+	def tmp_history_params
+		params.permit!
+	end
+
+	def history_params
+
+		post_params = [ :Action, :AccountSid,	:ToZip,	:FromState,	:Called,
+			:FromCountry,	:CallerCountry,	:CalledZip,	:Direction,	:FromCity,
+			:CalledCountry,	:Duration, :CallerState, :CallSid, :CalledState,
+			:From, :CallerZip, :FromZip, :CallStatus, :ToCity, :ToState,
+			:To, :CallDuration, :ToCountry,	:CallerCity, :ApiVersion,	:Caller,
+			:CalledCity, :Digits ]
+
+		params.permit(post_params)
+
+		ret_params = {}
+
+		post_params.each do |p|
+			ret_params[p.to_s.underscore.to_sym] = params[p]
+
+		end
+		
+		ret_params
 	end
 end
