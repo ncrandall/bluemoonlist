@@ -1,6 +1,6 @@
 <h1>Members</h1>
 <% @users.each do |u| %>
 	<div class="span12">
-		<%= link_to u.name, profile_path(u.id) %>
+		<%= link_to u.full_name, profile_path(u.id) %>
 	</div>
 <% end %>

@@ -2,7 +2,7 @@
 	<div class="row">
 		<span class="post offset2 span8">
 			<%= image_tag("no_pic.jpg") %>
-			<%= request.user.name %> Searched for <%= request.description %><br />
+			<%= request.user.full_name %> Searched for <%= request.description %><br />
 			<%= request.created_at %>
 			<% if request.user_id == current_user.id %>
 			<span class="options">
