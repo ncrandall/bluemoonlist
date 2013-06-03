@@ -73,12 +73,13 @@ class TwilioWorker
   end
 
   private
-
+  
   def get_next_uncontacted(twilio_job)
     twilio_job.twilio_contacts.each do |contact|
       if !contact.contacted?
         return contact
       end
     end
+    nil
   end
 end
