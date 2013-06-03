@@ -17,10 +17,11 @@ class RequestsController < ApplicationController
       twilio_worker = TwilioWorker.new
       twilio_worker.delay.begin_twilio_job(@request.twilio_job)
       flash[:success] = "Request successfully added"
-    else
-      flash[:error] = "Unable to create Request"
-    end
       redirect_to requests_path
+    else
+      @requests = Request.where(user_id: current_user.id)
+      render 'index'
+    end
   end
 
   #def edit
