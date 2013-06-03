@@ -50,7 +50,7 @@ class RequestsController < ApplicationController
 
   def build_twilio_job(request)
     twilio_job = request.build_twilio_job(
-        name: current_user.name,
+        name: current_user.full_name,
         phone: request.phone,
         status: 0
     )

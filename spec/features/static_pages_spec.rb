@@ -34,7 +34,8 @@ describe "Static Pages" do
 				find(:css, "form:last #user_email").set(new_user.email)
 				find(:css, "form:last #user_password").set(new_user.password)
 				find(:css, "form:last #user_password_confirmation").set(new_user.password_confirmation)
-				find(:css, "form:last #user_name").set(new_user.name)
+				find(:css, "form:last #user_first_name").set(new_user.first_name)
+				find(:css, "form:last #user_last_name").set(new_user.last_name)
 			end
 
 			it "should increment number of users" do

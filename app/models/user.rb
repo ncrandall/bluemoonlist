@@ -51,4 +51,8 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  def full_name
+    first_name.capitalize + " " + last_name.capitalize
+  end
 end

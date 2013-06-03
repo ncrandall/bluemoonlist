@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :configure_permitted_params, if: :devise_controller?
+  #before_filter :configure_permitted_params, if: :devise_controller?
 
   def after_sign_in_path_for(resource)
     feed_path
@@ -12,12 +12,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def configure_permitted_params
-  	devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(
-      :phone, :first_name, :last_name, :street, :city, :state, :zip, 
-      :email, :password, :password_confirmation, :uid, :name, :provider) }
-  	devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:phone, 
-      :first_name, :last_name, :street, :city, :state, :zip, 
-      :email, :password, :password_confirmation) }
-  end
+  #def configure_permitted_params
+  #	devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(
+  #    :phone, :first_name, :last_name, :street, :city, :state, :zip, 
+  #    :email, :password, :password_confirmation, :uid, :provider) }
+  #	devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:phone, 
+  #    :first_name, :last_name, :street, :city, :state, :zip, 
+  #    :email, :password, :password_confirmation) }
+  #end
 end
