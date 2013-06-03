@@ -9,7 +9,7 @@ class Request < ActiveRecord::Base
 
 	belongs_to :user
 	# This relationship will be changed to REST call eventually (see class diagram)
-	has_one :twilio_job, dependent: :destroy
+	has_one :twilio_job, dependent: :destroy, autosave: true
 
 	def status
 		STATUS.key(read_attribute(:status))
