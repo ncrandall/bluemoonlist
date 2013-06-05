@@ -6,9 +6,16 @@ class Request < ActiveRecord::Base
 	validates :status, presence: true
 	validates :phone, presence: true, format: { with: PHONE_REGEX }
 	validates :user_id, presence: true
+	validates :street, length: { maximum: 100 }
+	validates :city, length: { maximum: 100 }
+	validates :state, length: { maximum: 2 }
+	validates :zip, length: { maximum: 20 }
+	validates :category_id, presence: true
+
 	validate :user_has_open_request, on: :create
 
 	belongs_to :user
+	belongs_to :category
 	# This relationship will be changed to REST call eventually (see class diagram)
 	has_one :twilio_job, dependent: :destroy, autosave: true
 

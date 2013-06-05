@@ -19,7 +19,7 @@ class RequestsController < ApplicationController
       redirect_to request_path @request
     else
       @requests = Request.where(user_id: current_user.id)
-      render 'index'
+      redirect_to feed_path
     end
   end
 
@@ -53,7 +53,7 @@ class RequestsController < ApplicationController
   private
 
   def request_params
-    params.require(:request).permit(:phone, :description)
+    params.require(:request).permit(:phone, :description, :category_id)
   end
 
   def build_twilio_job(request)

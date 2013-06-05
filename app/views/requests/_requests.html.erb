@@ -9,6 +9,9 @@
 	<div class="row">
 		<span class="post offset2 span8">
 			<%= image_tag("no_pic.jpg") %>
+		  <% if request.user_id == current_user.id %>
+		  	<%= link_to "Details", request_path(request) %>
+		  <% end %>
 			<%= request.user.full_name %> Searched for <%= request.description %><br />
 			<%= request.created_at %>
 			<% if request.user_id == current_user.id %>

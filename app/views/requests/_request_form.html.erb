@@ -2,7 +2,7 @@
 	<div class="row">
 		<span class="offset2 span8">
 		<h4>What are you looking for?</h4>
-			<%= f.text_field :description, rows: 1, placeholder: "Plumber, Guitarist, Electician, etc.", class: "input-block-level" %>
+			<%= f.collection_select :category_id, @categories, :id, :name %>
 			<%= f.text_field :phone, placeholder: :phone %>
 			<span class="options">
 				<%= f.submit "Request Call", class: "btn btn-primary pull-right" %>

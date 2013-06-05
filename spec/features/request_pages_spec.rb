@@ -3,8 +3,9 @@ require 'spec_helper'
 describe 'Request Pages' do
 
 	let(:user) { FactoryGirl.create(:user) }
+	let(:category) { FactoryGirl.create(:category) }
 	let(:other_user) { FactoryGirl.create(:user) }
-	let(:request) { FactoryGirl.create(:request, user: user, status: 0) }
+	let(:request) { FactoryGirl.create(:request, user: user, status: 0, category: category) }
 
 	before { sign_in_user(user) }
 
@@ -22,8 +23,8 @@ describe 'Request Pages' do
 
 		describe "user should only see his requests" do
 			before do
-				2.times { FactoryGirl.create(:request, user: user, status: 0) }
-				3.times { FactoryGirl.create(:request, user: other_user, status: 0, phone: '111-111-1111') }
+				2.times { FactoryGirl.create(:request, user: user, status: 3, category: category) }
+				3.times { FactoryGirl.create(:request, user: other_user, status: 3, phone: '111-111-1111', category: category) }
 				visit requests_path
 			end
 			it { should_not have_text "111-111-1111" }

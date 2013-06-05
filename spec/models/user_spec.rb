@@ -6,8 +6,6 @@ describe User do
 	let(:other_user) { FactoryGirl.create(:user) }
 
 	subject { user }
-
-	it { should respond_to :name }
 	it { should respond_to :uid }
 	it { should respond_to :provider }
 
@@ -51,6 +49,11 @@ describe User do
 		it { should_not be_valid }
 	end
 
+	describe "with an invalid city" do
+		before { user.city = "a" * 101 }
+		it { should_not be_valid }
+	end
+
 	describe "with an invalid state" do
 		before { user.state = "CAA" }
 		it { should_not be_valid }
@@ -81,7 +84,7 @@ describe User do
 
   describe "user feed" do
   	before do 
-  		3.times { other_user.requests.create(description: "plumber", status: 0, phone: other_user.phone) }
+  		3.times { other_user.requests.create(description: "plumber", status: 3, phone: other_user.phone) }
   		user.follow!(other_user)
   	end
   	its(:feed) do

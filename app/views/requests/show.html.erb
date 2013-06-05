@@ -1,8 +1,29 @@
-<h1>Request</h1>
-<p>Status: <%= @request.status %></p>
-<p>Phone: <%= @request.phone %></p>
-<p>Description <%= @request.description %></p>
-Actions:<br />
+<div class="row">
+	<span class="span4">
+		<h4>Request Information</h4>
+		<p>Status: <%= @request.status %></p>
+		<p>Phone: <%= @request.phone %></p>
+		Actions:<br />
 
-
-<%= render 'requests/request_actions', request: @request %>
+		<%= render 'requests/request_actions', request: @request %>
+	</span>
+	<span class="span8">
+		<h4>Send this info to provider when you accept (optional):</h4>
+		<%= form_for @request do |f| %>
+			<p><%= f.text_area :description, placeholder: "Work Description" %></p>
+			<p>
+				<%= f.text_field :street, placeholder: :street %>
+			</p>
+			<p>
+				<%= f.text_field :city, placeholder: :city %>
+			</p>
+			<p>
+				<%= f.text_field :state, placeholder: :state %>
+			</p>
+			<p>
+				<%= f.text_field :zip, placeholder: :zip %>
+			</p>
+			<%= f.submit "Save" %>
+		<% end %>
+	</span>
+</div>

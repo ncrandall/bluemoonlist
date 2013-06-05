@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Request do
 	
 	let(:user) { FactoryGirl.create(:user) }
-	let(:request) { FactoryGirl.build(:request, user: user, status: 0) }
+	let(:category) { FactoryGirl.create(:category) }
+	let(:request) { FactoryGirl.build(:request, user: user, status: 0, category: category) }
 
 	subject { request }
 
@@ -11,7 +12,12 @@ describe Request do
 	it { should respond_to :description }
 	it { should respond_to :phone }
 	it { should respond_to :user }
+	it { should respond_to :street }
+	it { should respond_to :city }
+	it { should respond_to :state }
+	it { should respond_to :zip }
 	it { should respond_to :twilio_job }
+	it { should respond_to :category_id }
 	it { should be_valid }
 
 	# validations
@@ -36,6 +42,31 @@ describe Request do
 		it { should_not be_valid }
 	end
 
+	describe "with an invalid street" do
+		before { request.street = "a" * 101 }
+		it { should_not be_valid }
+	end
+
+	describe "with an invalid city" do
+		before { request.city = "a" * 101 }
+		it { should_not be_valid }
+	end
+
+	describe "with an invalid state" do
+		before { request.state = "CAA" }
+		it { should_not be_valid }
+	end
+
+	describe "with an invalid zip" do
+		before { request.zip = "a" * 21 }
+		it { should_not be_valid }
+	end
+
+	describe "without a category" do
+		before { request.category_id = nil }
+		it { should_not be_valid }
+	end
+
 	describe "when request is destroyed" do
 		before {	FactoryGirl.create(:twilio_job, request: request) }
 
@@ -47,7 +78,7 @@ describe Request do
 	# methods
 	describe "with another non-closed request" do
 		before do 
-			new_request = FactoryGirl.create(:request, user: user, status:0)
+			new_request = FactoryGirl.create(:request, user: user, status: 0, category: category)
 			new_request.save
 		end
 

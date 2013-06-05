@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   validates :phone, allow_nil: true, format: { with: PHONE_REGEX }
   validates :street, length: { maximum: 100 }
   validates :state, length: { maximum: 2 }
+  validates :city, length: { maximum: 100 }
   validates :zip, length: { maximum: 20 }
 
   has_many :requests
