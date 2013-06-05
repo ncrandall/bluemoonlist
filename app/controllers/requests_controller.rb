@@ -2,8 +2,7 @@ class RequestsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @request = Request.new
-    @requests = Request.where(user_id: current_user.id)
+    @requests = current_user.feed
   end
 
   def show
@@ -17,7 +16,7 @@ class RequestsController < ApplicationController
       twilio_worker = TwilioWorker.new
       twilio_worker.delay.begin_twilio_job(@request.twilio_job)
       flash[:success] = "Request successfully added"
-      redirect_to requests_path
+      redirect_to request_path @request
     else
       @requests = Request.where(user_id: current_user.id)
       render 'index'
@@ -27,18 +26,27 @@ class RequestsController < ApplicationController
   #def edit
   #end
 
-  #def update
-  #end
+  def update
+    request = current_user.requests.where(id: params[:id]).first
+
+    request.update_attributes(status: params[:request][:status].to_sym) unless 
+      params[:request][:status].nil?
+
+    respond_to do |format|
+      format.html { redirect_to request_path(request) }
+      format.js
+    end
+  end
 
   def destroy
-    @request = Request.where(id: params[:id]).first
-    @request.status = :cancelled
-    if @request.save
+    @request = current_user.requests.where(id: params[:id]).first
+
+    if @request.destroy
       flash[:success] = "Request successfully canceled"
     else
       flash[:success] = "Error cancelling request"
     end
-    redirect_to requests_path
+    redirect_to feed_path
   end
 
 

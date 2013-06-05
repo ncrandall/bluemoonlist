@@ -1,0 +1,18 @@
+<span class="request_actions">
+	<%= form_for request do |f| %>
+		<%= f.hidden_field :status, value: "cancelled" %>
+		<%= f.submit "Cancel", class: "btn" %>
+	<% end %>
+
+	<%= form_for request do |f| %>
+		<%= f.hidden_field :status, value: "active" %>
+		<%= f.submit "Restart", class: "btn" %>
+	<% end %>
+
+	<%= form_for request do |f| %>
+		<%= f.hidden_field :status, value: "paused" %>
+		<%= f.submit "Pause", class: "btn" %>
+	<% end %>
+
+	<%= link_to "delete", request_path(request.id), method: :DELETE, class: "btn" %>
+</span>

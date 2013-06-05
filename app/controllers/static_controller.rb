@@ -11,7 +11,12 @@ class StaticController < ApplicationController
   end
 
   def feed
-  	@request = Request.new
+    @request = Request.new.get_open_request_for_user(current_user.id)
+    
+    redirect_to request_path(@request) unless @request.nil?
+
+    @request = Request.new
+
   	@filter ||= params[:filter]
   	
   	if @filter == 'self'

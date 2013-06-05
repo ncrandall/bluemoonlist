@@ -9,6 +9,8 @@ class TwilioController < ApplicationController
 			@contact.call_sid = params[:CallSid]
 			@contact.save
 		end
+		params[:Action] = "Provider_Twiml"
+		history = TwilioHistory.create(history_params)
     respond_to :xml
   end
 
@@ -16,7 +18,10 @@ class TwilioController < ApplicationController
   	if params[:job_id]
   		@job = TwilioJob.where(id: params[:job_id]).first
   		@job.status = :paused
+  		@job.save
   	end
+  	params[:Action] = "Provider_Twiml"
+		history = TwilioHistory.create(history_params)
   	respond_to :xml
   end
 

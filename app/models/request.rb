@@ -6,6 +6,7 @@ class Request < ActiveRecord::Base
 	validates :status, presence: true
 	validates :phone, presence: true, format: { with: PHONE_REGEX }
 	validates :user_id, presence: true
+	validate :user_has_open_request, on: :create
 
 	belongs_to :user
 	# This relationship will be changed to REST call eventually (see class diagram)
@@ -28,5 +29,15 @@ class Request < ActiveRecord::Base
 	def self.from_users_followed_by(user)
 		select_sql = "SELECT neighbor_id FROM relationships WHERE user_id = :user_id"
 		where("user_id IN (#{select_sql}) OR user_id = :user_id", user_id: user.id)
+	end
+
+	def user_has_open_request
+		if Request.where(status: [0, 1], user_id: user_id).any?
+			errors.add(:user_id, "has an open request")
+		end
+	end
+
+	def get_open_request_for_user(id)
+		Request.where(status: [0, 1], user_id: id).first
 	end
 end

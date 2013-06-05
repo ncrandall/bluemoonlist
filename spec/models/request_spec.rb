@@ -45,4 +45,12 @@ describe Request do
 	end
 
 	# methods
+	describe "with another non-closed request" do
+		before do 
+			new_request = FactoryGirl.create(:request, user: user, status:0)
+			new_request.save
+		end
+
+		it { should_not be_valid }
+	end
 end

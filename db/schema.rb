@@ -155,7 +155,6 @@ ActiveRecord::Schema.define(version: 20130601212435) do
     t.string   "zip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
     t.string   "provider"
     t.string   "uid"
     t.string   "first_name"

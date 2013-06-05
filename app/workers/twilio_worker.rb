@@ -23,23 +23,23 @@ class TwilioWorker
       twilio_job.status = :done
       twilio_job.save
     else
-      path = "twilio/provider_twiml/#{contact.id}"
-      call_back_path = "twilio/provider_status_callback"
+      path = "twilio/provider_twiml/#{contact.id}.xml"
+      call_back_path = "twilio/provider_status_callback.xml"
       make_call(contact.phone, path, call_back_path)
     end
   end
 
   # Fire off the call
   def call_user(twilio_job)
-    path = "twilio/user_twiml"
-    call_back_path = "twilio/user_status_callback"
+    path = "twilio/user_twiml.xml"
+    call_back_path = "twilio/user_status_callback.xml"
     make_call(twilio_job.phone, path, call_back_path)
   end
 
   # Make a call to the provider and connect the two
   def connect_user_to_provider
-    path = "twilio/user_provider_twiml"
-    call_back_path = "twilio/user_provider_status_callback"
+    path = "twilio/user_provider_twiml.xml"
+    call_back_path = "twilio/user_provider_status_callback.xml"
     make_call(twilo_job.phone, path, call_back_path)
   end
 

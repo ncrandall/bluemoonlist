@@ -3,6 +3,6 @@
 <p>Phone: <%= @request.phone %></p>
 <p>Description <%= @request.description %></p>
 Actions:<br />
-<%= link_to "Details", request_path(@request.id), class: "btn btn-primary" %>
-<%= link_to "Cancel", request_path(@request.id), class: "btn btn-error" %>
-<%= link_to "Pause", request_path(@request.id), class: "btn btn-pause" %>
+
+
+<%= render 'requests/request_actions', request: @request %>

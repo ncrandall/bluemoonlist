@@ -1,3 +1,10 @@
+<% if !@requests.any? %>
+	<div class="row">
+		<span class="offset2 span8 text-center">
+			<p>Looks like there are no requests yet</p>
+		</span>
+	</div>
+<% end %>
 <% @requests.each do |request| %>
 	<div class="row">
 		<span class="post offset2 span8">
@@ -5,11 +12,7 @@
 			<%= request.user.full_name %> Searched for <%= request.description %><br />
 			<%= request.created_at %>
 			<% if request.user_id == current_user.id %>
-			<span class="options">
-				<%= link_to "Details", request_path(request.id), class: "btn btn-primary" %>
-				<%= link_to "Cancel", request_path(request.id), class: "btn btn-error", method: :DELETE %>
-				<%= link_to "Pause", request_path(request.id), class: "btn btn-pause" %>
-			</span>
+			<%= render 'requests/request_actions', request: request %>
 			<% end %>
 		</span>
 	</div>
