@@ -29,8 +29,11 @@ class RequestsController < ApplicationController
   def update
     request = current_user.requests.where(id: params[:id]).first
 
-    request.update_attributes(status: params[:request][:status].to_sym) unless 
-      params[:request][:status].nil?
+    if request.update_attributes(request_params)
+      flash[:success] = "Upated your request successfully"
+    else
+      flash[:error] = "There was an error updating request"
+    end
 
     respond_to do |format|
       format.html { redirect_to request_path(request) }
@@ -53,7 +56,8 @@ class RequestsController < ApplicationController
   private
 
   def request_params
-    params.require(:request).permit(:phone, :description, :category_id)
+    params.require(:request).permit(:phone, :description, :category_id, :status,
+      :street, :city, :state, :zip)
   end
 
   def build_twilio_job(request)
