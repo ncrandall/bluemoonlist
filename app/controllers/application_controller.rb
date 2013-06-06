@@ -8,16 +8,4 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     feed_path
   end
-
-
-  protected
-
-  #def configure_permitted_params
-  #	devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(
-  #    :phone, :first_name, :last_name, :street, :city, :state, :zip, 
-  #    :email, :password, :password_confirmation, :uid, :provider) }
-  #	devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:phone, 
-  #    :first_name, :last_name, :street, :city, :state, :zip, 
-  #    :email, :password, :password_confirmation) }
-  #end
 end

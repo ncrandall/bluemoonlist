@@ -14,10 +14,13 @@ html, body {
 
 .container-top {
 	padding-top: 60px;
+	padding-bottom: 200px;
+	overflow: auto;
 }
 
 .post {
 	margin-top: 15px;
+	margin-bottom: 15px;
 	padding: 5px 0px;
 	height: 80px;
 	border-top: 1px solid #ccc;

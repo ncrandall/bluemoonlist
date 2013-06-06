@@ -1,7 +1,6 @@
 <%= render 'requests/request_form' unless @open_request %>
 <div class="row">
-	<span class="offset5">
-		display:
+	<span class="offset2 span8 text-right">
 		<% if @filter %>
 			<%= link_to 'all', feed_path %> | mine
 		<% else %>
