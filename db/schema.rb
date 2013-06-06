@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130605201215) do
+ActiveRecord::Schema.define(version: 20130606224248) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20130605201215) do
     t.boolean  "contacted",     default: false
     t.boolean  "accepted",      default: false
     t.string   "call_sid"
+    t.string   "category"
   end
 
   add_index "twilio_contacts", ["call_sid"], name: "index_twilio_contacts_on_call_sid", unique: true, using: :btree

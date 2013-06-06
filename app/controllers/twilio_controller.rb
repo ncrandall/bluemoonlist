@@ -9,6 +9,13 @@ class TwilioController < ApplicationController
 			@contact.call_sid = params[:CallSid]
 			@contact.save
 		end
+		
+		# get the provider category for TwiML file
+		category = @contact.category
+		prefix = "an"
+		prefix = "a" unless category =~ /^[aeiou]/
+		@provider_cat = "#{prefix} #{category}"
+
 		params[:Action] = "Provider_Twiml"
 		history = TwilioHistory.create(history_params)
     respond_to :xml

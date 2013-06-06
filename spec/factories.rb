@@ -40,6 +40,7 @@ FactoryGirl.define do
 	factory :twilio_contact do
 		name "Joe Plumber"
 		phone "555-555-5555"
+		category "Plumber"
 		call_order 0
 	end
 end

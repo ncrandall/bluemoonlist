@@ -9,6 +9,7 @@ describe TwilioContact do
 	it { should respond_to :phone }
 	it { should respond_to :call_order }
 	it { should respond_to :name }
+	it { should respond_to :category }
 	it { should respond_to :twilio_job_id }
 	it { should respond_to :contacted }
 	it { should respond_to :accepted }
@@ -26,6 +27,11 @@ describe TwilioContact do
 
 	describe "with an empty order" do
 		before { twilio_contact.call_order = nil }
+		it { should_not be_valid }
+	end
+
+	describe "with an emtpy category" do
+		before { twilio_contact.category = "" }
 		it { should_not be_valid }
 	end
 end
