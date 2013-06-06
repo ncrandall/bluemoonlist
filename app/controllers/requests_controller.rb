@@ -29,6 +29,10 @@ class RequestsController < ApplicationController
   def update
     request = current_user.requests.where(id: params[:id]).first
 
+    # convert status param to symbol
+    params[:request][:status] = params[:request][:status].to_sym unless 
+      params[:request][:status].nil?
+
     if request.update_attributes(request_params)
       flash[:success] = "Upated your request successfully"
     else
@@ -69,12 +73,13 @@ class RequestsController < ApplicationController
 
     # Temporary List Generator
     cnt = 0
-    providers = Provider.joins(:categories).where(:categories => {name: "Plumber"})
+    providers =  Provider.where(id: Score.where(category_id: 1))
     providers.each do |p|
       cnt += 1
       twilio_job.twilio_contacts.build(
         name: p.name, 
-        phone: p.phone, 
+        phone: p.phone,
+        category: p.name,
         call_order: cnt
       )
     end
