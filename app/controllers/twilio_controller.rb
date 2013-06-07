@@ -45,12 +45,15 @@ class TwilioController < ApplicationController
 		params[:Action] = "Provider_Status_Callback" 
 		history = TwilioHistory.create(history_params)
 		contact = TwilioContact.where(call_sid: params[:CallSid]).first
-		contact.contacted = true;
-		contact.save
+		
+		if !contact.nil?
+			contact.contacted = true;
+			contact.save
 
-		twilio_worker = TwilioWorker.new
-		if !contact.accepted?
-			twilio_worker.delay.update_call_list(contact.twilio_job)
+			twilio_worker = TwilioWorker.new
+			if !contact.accepted?
+				twilio_worker.delay.update_call_list(contact.twilio_job)
+			end
 		end
 
 		respond_to :xml

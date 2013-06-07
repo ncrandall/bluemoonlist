@@ -6,7 +6,7 @@ class TwilioJob < ActiveRecord::Base
   validates :phone, presence: true, format: { with: PHONE_REGEX }
   validates :call_sid, allow_nil: true, length: { is: 36 }
 
-  has_many :twilio_contacts
+  has_many :twilio_contacts, dependent: :destroy
   # This relationship will be changed to REST call eventually (see class diagram)
   belongs_to :request
 
