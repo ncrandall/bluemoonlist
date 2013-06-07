@@ -1,3 +1,5 @@
 xml.instruct!
-xml.Say "Goodbye"
-xml.Hangup
+xml.Response do 
+	xml.Say @text
+	xml.Hangup
+end

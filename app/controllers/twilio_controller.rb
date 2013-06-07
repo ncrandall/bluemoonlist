@@ -49,9 +49,7 @@ class TwilioController < ApplicationController
 		contact.save
 
 		twilio_worker = TwilioWorker.new
-		if contact.accepted?
-			twilio_worker.delay.call_user(contact.twilio_job)
-		else
+		if !contact.accepted?
 			twilio_worker.delay.update_call_list(contact.twilio_job)
 		end
 
@@ -103,6 +101,13 @@ class TwilioController < ApplicationController
 	end
 
 	def end_call
+		@text = 'Goodbye'
+		if !params['DialCallStatus'].nil?
+			if params['DialCallStatus'] == 'busy' || params['DialCallStatus'] == "no-answer"
+				@text = "Unable to contact client, we will try again later. Goodbye"
+			end
+		end
+
 		respond_to :xml
 	end
 
