@@ -1,92 +1,36 @@
 class TwilioController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 
-	# twiml views
-
+	# first request when provider answers a call
 	def provider_twiml
-		if params[:id]
-			@contact = TwilioContact.where(id: params[:id]).first
-			@contact.call_sid = params[:CallSid]
-			@contact.save
-		end
+
+		# get contact and set the call_sid
+		contact = TwilioContact.where(id: params[:id]).first
+		contact.call_sid = params[:CallSid]
+		contact.save
 		
 		# get the provider category for TwiML file
-		category = @contact.category
+		category = contact.category
 		prefix = "an"
 		prefix = "a" unless category =~ /^[aeiou]/
-		@provider_cat = "#{prefix} #{category}"
 
+		# instance vars used in twiml file
+		@provider_cat = "#{prefix} #{category}"
+		@provider_id = contact.id
+
+		# save request to history
 		params[:Action] = "Provider_Twiml"
 		history = TwilioHistory.create(history_params)
+    
     respond_to :xml
   end
 
-  def user_twiml
-  	if params[:job_id]
-  		@job = TwilioJob.where(id: params[:job_id]).first
-  		@job.status = :paused
-  		@job.save
-  	end
-  	params[:Action] = "Provider_Twiml"
-		history = TwilioHistory.create(history_params)
-  	respond_to :xml
-  end
-
-	def user_provider_twiml
-		respond_to :xml
-	end
-
-	# Twilio provides several parameters in their callbacks
-	# http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters
-	# We will be intersted in the following params
-	# From, To, Sid
-
-	def provider_status_callback
-		params[:Action] = "Provider_Status_Callback" 
-		history = TwilioHistory.create(history_params)
-		contact = TwilioContact.where(call_sid: params[:CallSid]).first
-		
-		if !contact.nil?
-			contact.contacted = true;
-			contact.save
-
-			twilio_worker = TwilioWorker.new
-			if !contact.accepted?
-				twilio_worker.delay.update_call_list(contact.twilio_job)
-			end
-		end
-
-		respond_to :xml
-	end
-
-	def user_status_callback
-		params[:Action] = "User_Status_Callback"
-		history = TwilioHistory.create(history_params)
-		
-		# update this when we figure out how to connect the two
-
-		respond_to :xml
-	end
-
-	def user_provider_status_callback
-		params[:Action] = "User_Provider_Status_Callback"
-		history = TwilioHistory.create(history_params)
-		# connected both parties
-
-	  # couldn't connect parties
-		respond_to :xml
-	end
-
-
-	# gather action in Twiml
+	# gathers input from the provider phone call
 	def provider_gather
 
-		params[:Action] = "Provider_Gather"
-		TwilioHistory.create(history_params);
+		contact = TwilioContact.where(id: params[:id]).first
 
-		contact = TwilioContact.where(call_sid: params[:CallSid]).first
-
-		
+		# determine if the provider wants to talk to client
 		if params[:Digits] == '1'
 			contact.accepted = true
 			contact.save
@@ -95,18 +39,48 @@ class TwilioController < ApplicationController
 			render 'end_call'
 		end
 
+		# save request to history
+		params[:Action] = "Provider_Gather"
+		TwilioHistory.create(history_params);
+
 		respond_to :xml
 	end
 
-	def user_gather
-		# get user decision to connect / continue 
+	
+	def provider_status_callback
+		
+		# save that we contacted the provider
+		contact = TwilioContact.where(id: params[:id]).first
+		contact.contacted = true
+		contact.save
 
+		twilio_worker = TwilioWorker.new
+		
+		# if the call was accepted update the request status
+		if contact.accepted?
+			contact.twilio_job.request.update_attributes(status: :paused)
+		else
+			twilio_worker.delay.update_call_list(contact.twilio_job)
+		end
+
+		# save request to history
+		params[:Action] = "Provider_Status_Callback" 
+		history = TwilioHistory.create(history_params)
+
+		respond_to :xml
 	end
 
+
+
 	def end_call
+
 		@text = 'Goodbye'
-		if !params['DialCallStatus'].nil?
-			if params['DialCallStatus'] == 'busy' || params['DialCallStatus'] == "no-answer"
+
+		status = params['DialCallStatus']
+
+		# set the text of the twiml according to answer status
+		if !status.nil?
+			if status == 'busy' || status == "no-answer"
 				@text = "Unable to contact client, we will try again later. Goodbye"
 			end
 		end

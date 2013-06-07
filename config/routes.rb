@@ -12,14 +12,9 @@ Bluemoonlist::Application.routes.draw do
   root :to => "static#home"
 
   # Twilio requests
-  post "/twilio/provider_status_callback", to: "twilio#provider_status_callback"
-  post "/twilio/user_status_callback", to: "twilio#user_status_callback"
-  post "/twilio/user_provider_twiml_callback", to: "twilio#user_provider_status_callback"
   post "/twilio/provider_twiml/:id", to: "twilio#provider_twiml"
-  post "/twilio/user_twiml", to: "twilio#user_twiml"
-  post "/twilio/user_provider_twiml", to: "twilio#user_provider_twiml"
-  post "/twilio/provider_gather", to: "twilio#provider_gather"
-  post "/twilio/user_gather", to: "twilio#user_gather"
+  post "/twilio/provider_gather/:id", to: "twilio#provider_gather"
+  post "/twilio/provider_status_callback/:id", to: "twilio#provider_status_callback"
   post "/twilio/end_call", to: "twilio#end_call"
 
 
