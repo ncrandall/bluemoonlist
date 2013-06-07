@@ -89,6 +89,9 @@ class TwilioController < ApplicationController
 		if params[:Digits] == '1'
 			contact.accepted = true
 			contact.save
+			@number = contact.twilio_job.phone
+		else
+			render 'end_call'
 		end
 
 		respond_to :xml
@@ -97,6 +100,10 @@ class TwilioController < ApplicationController
 	def user_gather
 		# get user decision to connect / continue 
 
+	end
+
+	def end_call
+		respond_to :xml
 	end
 
 	private 
@@ -125,4 +132,5 @@ class TwilioController < ApplicationController
 		
 		ret_params
 	end
+
 end

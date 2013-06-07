@@ -20,6 +20,7 @@ Bluemoonlist::Application.routes.draw do
   post "/twilio/user_provider_twiml", to: "twilio#user_provider_twiml"
   post "/twilio/provider_gather", to: "twilio#provider_gather"
   post "/twilio/user_gather", to: "twilio#user_gather"
+  post "/twilio/end_call", to: "twilio#end_call"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

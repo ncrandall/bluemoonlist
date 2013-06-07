@@ -74,12 +74,13 @@ class RequestsController < ApplicationController
     # Temporary List Generator
     cnt = 0
     providers =  Provider.where(id: Score.where(category_id: request.category_id))
+    category = Category.where(id: request.category_id).first
     providers.each do |p|
       cnt += 1
       twilio_job.twilio_contacts.build(
         name: p.name, 
         phone: p.phone,
-        category: p.name,
+        category: category.name,
         call_order: cnt
       )
     end
