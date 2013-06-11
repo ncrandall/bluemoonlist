@@ -1,18 +1,32 @@
 <span class="request_actions">
-	<%= form_for request do |f| %>
-		<%= f.hidden_field :status, value: "cancelled" %>
-		<%= f.submit "Cancel", class: "btn" %>
+
+
+	<% if request.status == :paused %>
+		<%= form_for request do |f| %>
+			<%= f.hidden_field :status, value: "done" %>
+			<%= f.submit "Accept & Send Info", class: "btn btn-primary btn-large" %>
+		<% end %>
+		<br /><br />
+		<%= form_for request do |f| %>
+			<%= f.hidden_field :status, value: "active" %>
+			<%= f.submit "Resume", class: "btn btn-info" %>
+		<% end %>
+
 	<% end %>
 
-	<%= form_for request do |f| %>
-		<%= f.hidden_field :status, value: "active" %>
-		<%= f.submit "Restart", class: "btn" %>
+	<% if request.status == :active %>
+		<%= form_for request do |f| %>
+			<%= f.hidden_field :status, value: "paused" %>
+			<%= f.submit "Pause", class: "btn" %>
+		<% end %>
 	<% end %>
 
-	<%= form_for request do |f| %>
-		<%= f.hidden_field :status, value: "paused" %>
-		<%= f.submit "Pause", class: "btn" %>
+	<% if request.status != :cancelled %>
+		<%= form_for request do |f| %>
+			<%= f.hidden_field :status, value: "cancelled" %>
+			<%= f.submit "Cancel", class: "btn" %>
+		<% end %>
 	<% end %>
 
-	<%= link_to "delete", request_path(request.id), method: :DELETE, class: "btn" %>
+	<%= link_to "delete", request_path(request.id), method: :DELETE, class: "btn btn-danger" %>
 </span>

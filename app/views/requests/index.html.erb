@@ -1,2 +1,5 @@
-<%= render 'requests' %>
-
+<%= render 'requests/request_form' unless @open_request %>
+<div class="row">
+	<span class="offset2 span8"><h4>My Requests</h4></span>
+</div>
+<%= render 'requests/requests' %>

@@ -5,7 +5,7 @@ describe 'Request Pages' do
 	let(:user) { FactoryGirl.create(:user) }
 	let(:category) { FactoryGirl.create(:category) }
 	let(:other_user) { FactoryGirl.create(:user) }
-	let(:request) { FactoryGirl.create(:request, user: user, status: 0, category: category) }
+	let(:request) { FactoryGirl.create(:request, user: user, status: 3, category: category) }
 
 	before { sign_in_user(user) }
 
@@ -17,7 +17,6 @@ describe 'Request Pages' do
 
 		it "should increment request count" do
 			fill_in "request_phone", with: "555-555-5555"
-			fill_in "request_description", with: "Find an electrician"
 			expect { click_button 'Request Call' }.to change(Request, :count).by(1)
 		end
 

@@ -2,7 +2,17 @@ class RequestsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @requests = current_user.feed
+    @request = Request.new
+    @categories = Category.all
+    @open_request = current_user.requests.where(status: [0, 1]).any?
+
+    @filter ||= params[:filter]
+    
+    if @filter == 'self'
+      @requests = current_user.requests
+    else
+      @requests = current_user.feed
+    end
   end
 
   def show

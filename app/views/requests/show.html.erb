@@ -1,7 +1,7 @@
 <div class="row">
 	<span class="span4">
 		<h4>Request Information</h4>
-		<p>Status: <%= @request.status %></p>
+		<p>Status: <span class="<%= status_text_class(@request) %>"><%= @request.status %></span></p>
 		<p>Phone: <%= @request.phone %></p>
 		Actions:<br />
 

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def profile
-  	@user = User.where(id: params[:id])
+  	@user = User.where(id: params[:id]).first
   	@requests = Request.where(user_id: params[:id])
   end
 end

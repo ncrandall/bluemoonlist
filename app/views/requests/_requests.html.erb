@@ -9,14 +9,11 @@
 	<div class="row">
 		<span class="post offset2 span8">
 			<%= image_tag("no_pic.jpg") %>
+			<%= link_to request.user.full_name, profile_path(request.user) %> Searched for <%= verbose_noun(request.category.name) %><br />
+			<%= time_ago_in_words(request.created_at) + " ago" %>
 		  <% if request.user_id == current_user.id %>
-		  	<%= link_to "Details", request_path(request) %>
+		  	<%= link_to "Manage", request_path(request) %>
 		  <% end %>
-			<%= request.user.full_name %> Searched for <%= request.description %><br />
-			<%= request.created_at %>
-			<% if request.user_id == current_user.id %>
-			<%= render 'requests/request_actions', request: request %>
-			<% end %>
 		</span>
 	</div>
 <% end %>

@@ -39,7 +39,7 @@ class Request < ActiveRecord::Base
 	end
 
 	def user_has_open_request
-		if Request.where(status: [0, 1], user_id: user_id).any?
+		if Request.where(status: [0, 1], user_id: user_id).any? && status.in?([0,1])
 			errors.add(:user_id, "has an open request")
 		end
 	end
