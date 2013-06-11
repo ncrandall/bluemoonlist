@@ -16,6 +16,7 @@ Bluemoonlist::Application.routes.draw do
   post "/twilio/provider_gather/:id", to: "twilio#provider_gather"
   post "/twilio/provider_status_callback/:id", to: "twilio#provider_status_callback"
   post "/twilio/end_call", to: "twilio#end_call"
+  post "/twilio/provider_text_status_callback", to: "twilio#provider_text_status_callback"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

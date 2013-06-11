@@ -18,6 +18,7 @@ describe Request do
 	it { should respond_to :zip }
 	it { should respond_to :twilio_job }
 	it { should respond_to :category_id }
+	it { should respond_to :last_contacted_provider }
 	it { should be_valid }
 
 	# validations

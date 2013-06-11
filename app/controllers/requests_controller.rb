@@ -43,7 +43,14 @@ class RequestsController < ApplicationController
     params[:request][:status] = params[:request][:status].to_sym unless 
       params[:request][:status].nil?
 
+
     if request.update_attributes(request_params)
+      
+      if params[:request][:status] == :done
+        twilio_worker = TwilioWorker.new
+        twilio_worker.delay.send_text(@request)
+      end
+      
       flash[:success] = "Upated your request successfully"
     else
       flash[:error] = "There was an error updating request"
@@ -71,7 +78,7 @@ class RequestsController < ApplicationController
 
   def request_params
     params.require(:request).permit(:phone, :description, :category_id, :status,
-      :street, :city, :state, :zip)
+      :street, :city, :state, :zip, :last_contacted_provider)
   end
 
   def build_twilio_job(request)

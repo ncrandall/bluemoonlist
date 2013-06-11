@@ -2,14 +2,17 @@
 
 
 	<% if request.status == :paused %>
-		<%= form_for request do |f| %>
-			<%= f.hidden_field :status, value: "done" %>
-			<%= f.submit "Accept & Send Info", class: "btn btn-primary btn-large" %>
+		<% if !request.last_contacted_provider.nil? %>
+			<%= form_for request do |f| %>
+				<%= f.hidden_field :status, value: "done" %>
+				<%= f.submit "Accept & Send Info", class: "btn btn-primary btn-large" %>
+			<% end %>
+			<br /><br />
 		<% end %>
-		<br /><br />
+
 		<%= form_for request do |f| %>
 			<%= f.hidden_field :status, value: "active" %>
-			<%= f.submit "Resume", class: "btn btn-info" %>
+			<%= f.submit "Resume", class: "btn btn-success" %>
 		<% end %>
 
 	<% end %>
@@ -17,7 +20,7 @@
 	<% if request.status == :active %>
 		<%= form_for request do |f| %>
 			<%= f.hidden_field :status, value: "paused" %>
-			<%= f.submit "Pause", class: "btn" %>
+			<%= f.submit "Pause", class: "btn btn-warning" %>
 		<% end %>
 	<% end %>
 

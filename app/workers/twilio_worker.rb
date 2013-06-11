@@ -1,6 +1,5 @@
 class TwilioWorker
 	def begin_twilio_job(twilio_job)
-
 		update_call_list(twilio_job)
 	end
 
@@ -32,7 +31,7 @@ class TwilioWorker
   # Makes a REST call to either the dev twilio clone or
   # Twilio based on environment
   def make_call(to, path, call_back_path)
-    from = '+14155150551'
+    from = '+18015131966'
     req_params = {
       from: from,
       to: to,
@@ -54,6 +53,32 @@ class TwilioWorker
 
       account = client.account
       call = account.calls.create(req_params)
+    end
+  end
+
+
+  # Makes a REST call to twilio to send a text message to a provder
+  def send_text(request)
+    from = '+18015131966'
+
+    str = "#{request.description}\n\n#{request.street}\n#{request.city} #{request.state}, #{request.zip}"
+
+    req_params = {
+      from: from,
+      to: request.last_contacted_provider,
+      status_callback: "http://morning-shelf-8847.herokuapp.com/twilio/provider_text_status_callback.xml",
+      body: str
+    }
+
+    if Rails.env == "development"
+      url = "http://127.0.0.1:4567/send_text"
+      req_params[:status_callback] = "http://localhost:3000/twilio/provider_text_status_callback.xml"
+      RestClient.post url, req_params
+    else
+      client = Twilio::REST::Client.new(ENV["TWILIO_SID"], ENV["TWILIO_TOKEN"])
+
+      account = client.account
+      message = account.sms.messages.create(req_params)
     end
   end
 

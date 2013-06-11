@@ -16,7 +16,7 @@ class Request < ActiveRecord::Base
 
 	belongs_to :user
 	belongs_to :category
-	# This relationship will be changed to REST call eventually (see class diagram)
+	# TODO: This relationship will be changed to REST call eventually (see class diagram)
 	has_one :twilio_job, dependent: :destroy, autosave: true
 
 	def status

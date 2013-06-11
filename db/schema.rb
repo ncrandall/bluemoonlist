@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130606224248) do
+ActiveRecord::Schema.define(version: 20130611191403) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20130606224248) do
     t.string   "state"
     t.string   "zip"
     t.integer  "category_id"
+    t.string   "last_contacted_provider"
   end
 
   add_index "requests", ["user_id"], name: "index_requests_on_user_id", using: :btree

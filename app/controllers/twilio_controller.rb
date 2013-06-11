@@ -58,7 +58,7 @@ class TwilioController < ApplicationController
 		
 		# if the call was accepted update the request status
 		if contact.accepted?
-			contact.twilio_job.request.update_attributes(status: :paused)
+			contact.twilio_job.request.update_attributes(status: :paused, last_contacted_provider: contact.phone)
 		else
 			twilio_worker.delay.update_call_list(contact.twilio_job)
 		end
@@ -84,6 +84,15 @@ class TwilioController < ApplicationController
 				@text = "Unable to contact client, we will try again later. Goodbye"
 			end
 		end
+
+		respond_to :xml
+	end
+
+	def provider_text_status_callback
+		
+		# TODO: save to provider that a text was sent to him based on success or not 
+		params[:Action] = "Provider_Text_Status_Callback"
+		history = TwilioHistory.create(history_params)
 
 		respond_to :xml
 	end
