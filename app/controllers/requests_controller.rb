@@ -48,7 +48,7 @@ class RequestsController < ApplicationController
       
       if params[:request][:status] == :done
         twilio_worker = TwilioWorker.new
-        twilio_worker.delay.send_text(@request)
+        twilio_worker.delay.send_text(request)
       end
       
       flash[:success] = "Upated your request successfully"
