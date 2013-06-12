@@ -7,23 +7,5 @@
 
 		<%= render 'requests/request_actions', request: @request %>
 	</span>
-	<span class="span8">
-		<h4>Send this info to provider when you accept (optional):</h4>
-		<%= form_for @request do |f| %>
-			<p><%= f.text_area :description, placeholder: "Work Description" %></p>
-			<p>
-				<%= f.text_field :street, placeholder: :street %>
-			</p>
-			<p>
-				<%= f.text_field :city, placeholder: :city %>
-			</p>
-			<p>
-				<%= f.text_field :state, placeholder: :state %>
-			</p>
-			<p>
-				<%= f.text_field :zip, placeholder: :zip %>
-			</p>
-			<%= f.submit "Save" %>
-		<% end %>
-	</span>
+	<%= render 'requests/request_info_form', request: @request %>
 </div>

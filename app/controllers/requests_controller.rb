@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :correct_user, only: [:update, :destroy]
 
   def index
     @request = Request.new
@@ -103,5 +104,12 @@ class RequestsController < ApplicationController
     end
 
     request
+  end
+
+  def correct_user
+    @request = Request.where(id: params[:id]).first
+    if @request.nil? || current_user != @request.user
+      redirect_to root_path
+    end
   end
 end
