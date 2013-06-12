@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :city, length: { maximum: 100 }
   validates :zip, length: { maximum: 20 }
 
-  has_many :requests, order: "created_at DESC"
+  has_many :requests
 
   has_many :relationships, dependent: :destroy
   has_many :neighbors, through: :relationships, dependent: :destroy

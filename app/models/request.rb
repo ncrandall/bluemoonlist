@@ -1,4 +1,7 @@
 class Request < ActiveRecord::Base
+	# Always return requests in descending order from DB
+	default_scope -> { order('created_at DESC') }
+
 	STATUS = { active: 0, paused: 1, cancelled: 2, done: 3 }
 	
 	# validates :status, inclusion: { in: STATUS }
@@ -35,7 +38,7 @@ class Request < ActiveRecord::Base
 
 	def self.from_users_followed_by(user)
 		select_sql = "SELECT neighbor_id FROM relationships WHERE user_id = :user_id"
-		where("user_id IN (#{select_sql}) OR user_id = :user_id", user_id: user.id).order("created_at DESC")
+		where("user_id IN (#{select_sql}) OR user_id = :user_id", user_id: user.id)
 	end
 
 	def user_has_open_request
