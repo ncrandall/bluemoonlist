@@ -35,7 +35,7 @@ class Request < ActiveRecord::Base
 
 	def self.from_users_followed_by(user)
 		select_sql = "SELECT neighbor_id FROM relationships WHERE user_id = :user_id"
-		where("user_id IN (#{select_sql}) OR user_id = :user_id", user_id: user.id)
+		where("user_id IN (#{select_sql}) OR user_id = :user_id", user_id: user.id).order("created_at DESC")
 	end
 
 	def user_has_open_request
