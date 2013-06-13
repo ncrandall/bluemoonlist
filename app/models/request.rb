@@ -2,7 +2,7 @@ class Request < ActiveRecord::Base
 	# Always return requests in descending order from DB
 	default_scope -> { order('created_at DESC') }
 
-	STATUS = { active: 0, paused: 1, cancelled: 2, done: 3 }
+	STATUS = { active: 0, paused: 1, cancelled: 2, working: 3, invoicing: 4, done: 5 }
 	
 	# validates :status, inclusion: { in: STATUS }
 	validates :description, length: { maximum: 140 }
