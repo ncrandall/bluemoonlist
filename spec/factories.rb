@@ -1,7 +1,8 @@
 FactoryGirl.define do 
 	factory :provider do
-		name	"Joe the Plumber"
-		contact "Joe Shmoe"
+		company_name	"Joe the Plumber"
+		first_name "Joe" 
+		last_name "Shmoe"
 		phone		"555-555-5555"
 		street	"123 Fake St"
 		city		"Springfield"
