@@ -22,13 +22,18 @@ class RequestsController < ApplicationController
 
   def create
     @request = current_user.requests.build(request_params)
-    @request = build_twilio_job(@request) 
+    # @request = build_twilio_job(@request) 
+    @request = build_provider_contact_list(@request)
     if @request.save
+      # TODO: send a request to twilio subsystem to make a call 
       twilio_worker = TwilioWorker.new
       twilio_worker.delay.begin_twilio_job(@request.twilio_job)
+      # end request to twilio subsystem
+
       flash[:success] = "Request successfully added"
       redirect_to request_path @request
     else
+      flash[:error] = "There was a problem making request"
       @requests = Request.where(user_id: current_user.id)
       redirect_to feed_path
     end
@@ -69,7 +74,7 @@ class RequestsController < ApplicationController
     if @request.destroy
       flash[:success] = "Request successfully canceled"
     else
-      flash[:success] = "Error cancelling request"
+      flash[:error] = "Error cancelling request"
     end
     redirect_to feed_path
   end
@@ -82,6 +87,21 @@ class RequestsController < ApplicationController
       :street, :city, :state, :zip, :last_contacted_provider)
   end
 
+  def build_provider_contact_list(request)
+    # Temporary Provider Contact List Generator
+
+    providers = Provider.where(id: Score.where(category_id: request.category_id)).limit(3)
+
+    cnt = 0
+    providers.each do |p|
+      request.request_providers.build(provider: p, call_order: cnt)
+      cnt += 1
+    end 
+
+    request
+  end
+
+  # TODO: deprecate
   def build_twilio_job(request)
     twilio_job = request.build_twilio_job(
         name: current_user.full_name,

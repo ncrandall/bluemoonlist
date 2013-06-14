@@ -1,4 +1,11 @@
 FactoryGirl.define do 
+
+	factory :request_provider do
+		sequence(:call_order) { |n| n }
+		contacted false
+		accepted false
+	end
+
 	factory :provider do
 		company_name	"Joe the Plumber"
 		first_name "Joe" 
@@ -30,7 +37,7 @@ FactoryGirl.define do
 	end
 
 	factory :category do
-		name "Plumber"
+		sequence(:name) { |n| "Plumber#{n}" }
 	end
 
 	factory :twilio_job do

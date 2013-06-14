@@ -84,7 +84,12 @@ describe User do
 
   describe "user feed" do
   	before do 
-  		3.times { other_user.requests.create(description: "plumber", status: 3, phone: other_user.phone) }
+  		3.times { FactoryGirl.create(
+  			:request, 
+  			user: other_user, 
+  			category: FactoryGirl.create(:category),
+  			status: :working)
+  		}
   		user.follow!(other_user)
   	end
   	its(:feed) do

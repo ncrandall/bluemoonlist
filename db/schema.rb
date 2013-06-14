@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130614183551) do
+ActiveRecord::Schema.define(version: 20130614222309) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -58,6 +58,16 @@ ActiveRecord::Schema.define(version: 20130614183551) do
 
   add_index "relationships", ["user_id", "neighbor_id"], name: "index_relationships_on_user_id_and_neighbor_id", unique: true, using: :btree
 
+  create_table "request_providers", force: true do |t|
+    t.integer  "request_id"
+    t.integer  "provider_id"
+    t.integer  "call_order"
+    t.boolean  "contacted",   default: false
+    t.boolean  "accepted",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "requests", force: true do |t|
     t.integer  "status"
     t.string   "description"
@@ -70,7 +80,7 @@ ActiveRecord::Schema.define(version: 20130614183551) do
     t.string   "state"
     t.string   "zip"
     t.integer  "category_id"
-    t.string   "last_contacted_provider"
+    t.integer  "last_contacted_provider_id"
   end
 
   add_index "requests", ["user_id"], name: "index_requests_on_user_id", using: :btree

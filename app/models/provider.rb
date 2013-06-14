@@ -8,6 +8,9 @@ class Provider < ActiveRecord::Base
 	validates :zip, length: { maximum: 20 }
 
 	belongs_to :user
+
+	has_many :request_providers, dependent: :destroy
+
 	has_many :scores
 	has_many :categories, through: :scores
 end

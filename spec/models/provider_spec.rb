@@ -16,7 +16,7 @@ describe Provider do
   it { should respond_to :zip }
 
   it { should respond_to :user}
-
+  it { should respond_to :request_providers }
   it { should respond_to :scores }
   it { should respond_to :categories }
   

@@ -19,8 +19,11 @@ class Request < ActiveRecord::Base
 
 	belongs_to :user
 	belongs_to :category
+
+	has_many :request_providers, dependent: :destroy, autosave: true
 	# TODO: This relationship will be changed to REST call eventually (see class diagram)
 	has_one :twilio_job, dependent: :destroy, autosave: true
+
 
 	def status
 		STATUS.key(read_attribute(:status))
@@ -42,7 +45,7 @@ class Request < ActiveRecord::Base
 	end
 
 	def user_has_open_request
-		if Request.where(status: [0, 1], user_id: user_id).any? && status.in?([0,1])
+		if Request.where(status: [0, 1], user_id: user_id).any? && status.in?([:active,:paused])
 			errors.add(:user_id, "has an open request")
 		end
 	end

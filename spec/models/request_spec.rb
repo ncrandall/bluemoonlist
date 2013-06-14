@@ -18,7 +18,8 @@ describe Request do
 	it { should respond_to :zip }
 	it { should respond_to :twilio_job }
 	it { should respond_to :category_id }
-	it { should respond_to :last_contacted_provider }
+	it { should respond_to :last_contacted_provider_id }
+	it { should respond_to :request_providers }
 	it { should be_valid }
 
 	# validations
@@ -78,11 +79,7 @@ describe Request do
 
 	# methods
 	describe "with another non-closed request" do
-		before do 
-			new_request = FactoryGirl.create(:request, user: user, status: 0, category: category)
-			new_request.save
-		end
-
+		before { FactoryGirl.create(:request, user: user, status: 0, category: category) }
 		it { should_not be_valid }
 	end
 end
