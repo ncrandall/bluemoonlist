@@ -5,6 +5,10 @@
 		<p>Phone: <%= @request.phone %></p>
 		Actions:<br />
 
+		<h4>Live Update</h4>
+		<div id="firehose">
+			No updates yet
+		</div>
 		<%= render 'requests/request_actions', request: @request %>
 	</span>
 	<% if @request.status == :invoicing %>
