@@ -13,4 +13,8 @@ class Provider < ActiveRecord::Base
 
 	has_many :scores
 	has_many :categories, through: :scores
+
+	def full_name
+    "#{first_name.capitalize} #{last_name.capitalize}"
+  end
 end

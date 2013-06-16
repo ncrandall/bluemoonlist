@@ -1,6 +1,12 @@
 class TwilioWorker
 	def begin_twilio_job(twilio_job)
-		update_call_list(twilio_job)
+    # execut based on type of job
+    case twilio_job.type
+    when :call
+		  update_call_list(twilio_job)
+    when :text
+      send_text(twilio_job)
+    end
 	end
 
   # Update the call list, send to call_next_provider

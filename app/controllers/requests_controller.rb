@@ -21,15 +21,11 @@ class RequestsController < ApplicationController
   end
 
   def create
-    @request = current_user.requests.build(request_params)
-    # @request = build_twilio_job(@request) 
-    @request = build_provider_contact_list(@request)
-    if @request.save
-      # TODO: send a request to twilio subsystem to make a call 
-      twilio_worker = TwilioWorker.new
-      twilio_worker.delay.begin_twilio_job(@request.twilio_job)
-      # end request to twilio subsystem
+    
+    @request = current_user.requests.build(request_params).build_provider_list
 
+    if @request.save
+      @request.make_calls
       flash[:success] = "Request successfully added"
       redirect_to request_path @request
     else
@@ -85,45 +81,6 @@ class RequestsController < ApplicationController
   def request_params
     params.require(:request).permit(:phone, :description, :category_id, :status,
       :street, :city, :state, :zip, :last_contacted_provider)
-  end
-
-  def build_provider_contact_list(request)
-    # Temporary Provider Contact List Generator
-
-    providers = Provider.where(id: Score.where(category_id: request.category_id)).limit(3)
-
-    cnt = 0
-    providers.each do |p|
-      request.request_providers.build(provider: p, call_order: cnt)
-      cnt += 1
-    end 
-
-    request
-  end
-
-  # TODO: deprecate
-  def build_twilio_job(request)
-    twilio_job = request.build_twilio_job(
-        name: current_user.full_name,
-        phone: request.phone,
-        status: 0
-    )
-
-    # Temporary List Generator
-    cnt = 0
-    providers =  Provider.where(id: Score.where(category_id: request.category_id))
-    category = Category.where(id: request.category_id).first
-    providers.each do |p|
-      cnt += 1
-      twilio_job.twilio_contacts.build(
-        name: p.name, 
-        phone: p.phone,
-        category: category.name,
-        call_order: cnt
-      )
-    end
-
-    request
   end
 
   def correct_user

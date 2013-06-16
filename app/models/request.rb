@@ -53,4 +53,13 @@ class Request < ActiveRecord::Base
 	def get_open_request_for_user(id)
 		Request.where(status: [0, 1], user_id: id).first
 	end
+
+	def build_provider_list
+		RequestProviderListService.new self
+		self
+	end
+
+	def make_calls
+		RequestCallService.new self
+	end
 end
