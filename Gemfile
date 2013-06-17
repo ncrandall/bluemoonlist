@@ -12,6 +12,7 @@ gem 'omniauth-facebook'
 
 gem 'bootstrap-sass', '2.3.1.0'
 
+gem 'rest-client'
 gem 'delayed_job_active_record', '4.0.0.beta2'
 gem 'daemons'
 
@@ -55,7 +56,6 @@ group :test, :development do
 	# Use sqlite3 as the database for Active Record
 	# gem 'sqlite3'
 	gem 'factory_girl_rails', '4.2.1'
-	gem 'rest-client'
 end
 
 # Use ActiveModel has_secure_password
