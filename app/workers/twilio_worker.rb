@@ -2,9 +2,9 @@ class TwilioWorker
 	def begin_twilio_job(twilio_job)
     # execut based on type of job
     case twilio_job.contact_method
-    when :call
+    when 0
 		  update_call_list(twilio_job)
-    when :text
+    when 1
       send_text(twilio_job)
     end
 	end
