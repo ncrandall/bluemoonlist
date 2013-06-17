@@ -6,6 +6,7 @@ class TwilioJobsController < ApplicationController
 		twilio_job.build_contact_list(twilio_contact_params)
 
 		if twilio_job.save
+			twilio_job.start_job
 			@message = { success: true, id: twilio_job.id }
 		else
 			@message = { success: false, message: "Error creating job", errors: "#{twilio_job.errors.messages.to_json}" }

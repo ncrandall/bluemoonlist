@@ -44,4 +44,8 @@ class TwilioJob < ActiveRecord::Base
     self
   end
 
+  def start_job
+    twilio_worker = TwilioWorker.new
+    twilio_worker.delay.begin_twilio_job(self)
+  end
 end
