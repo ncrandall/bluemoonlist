@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130615001404) do
+ActiveRecord::Schema.define(version: 20130617222949) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -152,7 +152,8 @@ ActiveRecord::Schema.define(version: 20130615001404) do
     t.datetime "updated_at"
     t.integer  "request_id"
     t.string   "call_sid"
-    t.integer  "type"
+    t.integer  "contact_method"
+    t.string   "status_callback"
   end
 
   add_index "twilio_jobs", ["call_sid"], name: "index_twilio_jobs_on_call_sid", unique: true, using: :btree

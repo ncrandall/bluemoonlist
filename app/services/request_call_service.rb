@@ -1,25 +1,35 @@
 class RequestCallService
 
 	def initialize(request)
-		call_params = {
-			name: request.user.full_name,
-			phone: request.phone,
-			status: 0,
-			status_callback: 'http://morning-shelf-8847.herokuapp.com/requests/callback',
-			providers: []
+		call_params = { 
+			twilio_job: {
+				name: request.user.full_name,
+				phone: request.phone,
+				status: 0,
+				contact_method: :call,
+				status_callback: "#{ENV['BLUEMOONLIST_URL']}requests/callback",
+				providers: []
+			}
 		}
 
 		request.request_providers.each do |p|
-			call_params[:providers].push(
-				{ provider:	{ name: p.provider.full_name, phone: p.provider.phone } })
+			call_params[:twilio_job][:providers].push(
+				{ provider:	{ 
+						name: p.provider.full_name, 
+						phone: p.provider.phone, 
+						category: request.category.name,
+						call_order: p.call_order
+					} 
+				})
 		end
 
-		Rails.logger.info(call_params.to_json)
+		body = call_params.to_json
+		Rails.logger.info(body)
 
-		url = "http://morning-shelf-8847.herokuapp.com/twilio_jobs"
-		headers = { content_type: "application/json" }
+		url = "#{ENV['CALL_SERVICE_URL']}twilio_jobs"
 
-		response = RestClient.post url, call_params, headers
+		response = RestClient.post url, body, { content_type: :json }
+		Rails.logger.info("Response: #{response}")
 	end
 
 end

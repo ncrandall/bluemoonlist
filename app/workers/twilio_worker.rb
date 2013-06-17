@@ -41,22 +41,18 @@ class TwilioWorker
     req_params = {
       from: from,
       to: to,
-      url: "http://morning-shelf-8847.herokuapp.com/#{path}",
+      url: "#{ENV['CALL_SERVICE_URL']}#{path}",
       if_machine: "Hangup",
-      status_callback: "http://morning-shelf-8847.herokuapp.com/#{call_back_path}",
+      status_callback: "#{ENV['CALL_SERVICE_URL']}#{call_back_path}",
       timeout: 10
 
     }
 
     if Rails.env == "development"
-    	
       url = "http://127.0.0.1:4567/make_call"
-      req_params[:url] = "http://localhost:3000/#{path}"
-      req_params[:status_callback] = "http://localhost:3000/#{call_back_path}"
       RestClient.post url, req_params
     else
       client = Twilio::REST::Client.new(ENV["TWILIO_SID"], ENV["TWILIO_TOKEN"])
-
       account = client.account
       call = account.calls.create(req_params)
     end
@@ -72,13 +68,12 @@ class TwilioWorker
     req_params = {
       from: from,
       to: request.last_contacted_provider,
-      status_callback: "http://morning-shelf-8847.herokuapp.com/twilio/provider_text_status_callback.xml",
+      status_callback: "#{ENV['CALL_SERVICE_URL']}twilio/provider_text_status_callback.xml",
       body: str
     }
 
     if Rails.env == "development"
       url = "http://127.0.0.1:4567/send_text"
-      req_params[:status_callback] = "http://localhost:3000/twilio/provider_text_status_callback.xml"
       RestClient.post url, req_params
     else
       client = Twilio::REST::Client.new(ENV["TWILIO_SID"], ENV["TWILIO_TOKEN"])

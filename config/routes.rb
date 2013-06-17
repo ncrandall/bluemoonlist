@@ -9,9 +9,12 @@ Bluemoonlist::Application.routes.draw do
   get "/static/about"
   resources :categories
   resources :requests, except: [:new]
+  post '/requests/callback', to: "requests#callback"
   root :to => "static#home"
 
-  # Twilio requests
+  # Twilio Subsystem Routes
+  resources :twilio_jobs, only: [:create, :update]
+
   post "/twilio/provider_twiml/:id", to: "twilio#provider_twiml"
   post "/twilio/provider_gather/:id", to: "twilio#provider_gather"
   post "/twilio/provider_status_callback/:id", to: "twilio#provider_status_callback"

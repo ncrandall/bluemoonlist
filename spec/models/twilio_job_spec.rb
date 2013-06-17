@@ -13,7 +13,8 @@ describe TwilioJob do
 	it { should respond_to :twilio_contacts }
 	it { should respond_to :request }
 	it { should respond_to :call_sid }
-	it { should respond_to :type }
+	it { should respond_to :status_callback }
+	it { should respond_to :contact_method }
 	it { should be_valid }
 
 	describe "with an invalid number" do

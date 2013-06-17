@@ -43,7 +43,7 @@ FactoryGirl.define do
 	factory :twilio_job do
 		name "John Doe"
 		phone "555-555-5555"
-		type :call
+		contact_method :call
 	end
 
 	factory :twilio_contact do

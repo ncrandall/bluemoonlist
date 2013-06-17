@@ -25,7 +25,7 @@ class RequestsController < ApplicationController
     @request = current_user.requests.build(request_params).build_provider_list
 
     if @request.save
-      @request.make_calls
+      @request.delay.make_calls
       flash[:success] = "Request successfully added"
       redirect_to request_path @request
     else
