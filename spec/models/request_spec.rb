@@ -16,7 +16,6 @@ describe Request do
 	it { should respond_to :city }
 	it { should respond_to :state }
 	it { should respond_to :zip }
-	it { should respond_to :twilio_job }
 	it { should respond_to :category_id }
 	it { should respond_to :last_contacted_provider_id }
 	it { should respond_to :request_providers }
@@ -67,14 +66,6 @@ describe Request do
 	describe "without a category" do
 		before { request.category_id = nil }
 		it { should_not be_valid }
-	end
-
-	describe "when request is destroyed" do
-		before {	FactoryGirl.create(:twilio_job, request: request) }
-
-		it "should delete dependent TwilioJobs" do
-			expect { request.destroy }.to change(TwilioJob, :count).by(-1)
-		end
 	end
 
 	# methods

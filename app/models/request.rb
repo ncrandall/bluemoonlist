@@ -22,7 +22,7 @@ class Request < ActiveRecord::Base
 
 	has_many :request_providers, dependent: :destroy, autosave: true
 	# TODO: This relationship will be changed to REST call eventually (see class diagram)
-	has_one :twilio_job, dependent: :destroy, autosave: true
+	# has_one :twilio_job, dependent: :destroy, autosave: true
 
 
 	def status

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TwilioContact do
 
-  let(:twilio_contact) { FactoryGirl.create(:twilio_contact) } 
+  let(:twilio_contact) { FactoryGirl.create(:twilio_contact, external_contact_id: 0) } 
 
 	subject { twilio_contact }
 
@@ -13,6 +13,7 @@ describe TwilioContact do
 	it { should respond_to :twilio_job_id }
 	it { should respond_to :contacted }
 	it { should respond_to :accepted }
+	it { should respond_to :external_contact_id }
 	it { should be_valid }
 
 	describe "with an invalid number" do

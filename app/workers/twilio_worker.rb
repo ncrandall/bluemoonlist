@@ -25,9 +25,11 @@ class TwilioWorker
 
     if contact.nil?
       #if it gets here terminate TwilioJob. No more contacts exist
+      twilio_job.delay.make_callback("done")
       twilio_job.status = :done
       twilio_job.save
     else
+      contact.delay.make_callback("calling")
       path = "twilio/provider_twiml/#{contact.id}.xml"
       call_back_path = "twilio/provider_status_callback/#{contact.id}.xml"
       make_call(contact.phone, path, call_back_path)

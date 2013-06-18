@@ -32,6 +32,7 @@ class TwilioController < ApplicationController
 
 		# determine if the provider wants to talk to client
 		if params[:Digits] == '1'
+			contact.make_callback("paused")
 			contact.accepted = true
 			contact.save
 			@number = contact.twilio_job.phone

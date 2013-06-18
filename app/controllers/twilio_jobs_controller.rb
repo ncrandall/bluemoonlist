@@ -23,10 +23,10 @@ class TwilioJobsController < ApplicationController
 	private
 
 	def twilio_job_params
-		params.require(:twilio_job).permit(:status, :name, :phone, :status_callback, :contact_method)
+		params.require(:twilio_job).permit(:status, :name, :phone, :status_callback, :contact_method, :external_job_id)
 	end
 
 	def twilio_contact_params
-		params.require(:twilio_job).permit(:providers => { :provider => [:name, :phone, :category, :call_order] })
+		params.require(:twilio_job).permit(:providers => { :provider => [:name, :phone, :category, :call_order, :external_contact_id] })
 	end
 end

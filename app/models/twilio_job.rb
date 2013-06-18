@@ -7,10 +7,11 @@ class TwilioJob < ActiveRecord::Base
 	validates :name, presence: true, length: { maximum: 100 }
   validates :phone, presence: true, format: { with: PHONE_REGEX }
   validates :call_sid, allow_nil: true, length: { is: 36 }
+  validates :external_job_id, presence: true
 
   has_many :twilio_contacts, dependent: :destroy
   # This relationship will be changed to REST call eventually (see class diagram)
-  belongs_to :request
+  # belongs_to :request
 
   def status=(s)
     write_attribute(:status, STATUS[s])
@@ -47,5 +48,9 @@ class TwilioJob < ActiveRecord::Base
   def start_job
     twilio_worker = TwilioWorker.new
     twilio_worker.delay.begin_twilio_job(self)
+  end
+
+  def make_callback(action)
+    JobCallbackService.new(self, action)
   end
 end

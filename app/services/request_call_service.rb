@@ -8,6 +8,7 @@ class RequestCallService
 				status: 0,
 				contact_method: :call,
 				status_callback: "#{ENV['BLUEMOONLIST_URL']}requests/callback",
+				external_job_id: request.id,
 				providers: []
 			}
 		}
@@ -18,7 +19,8 @@ class RequestCallService
 						name: p.provider.full_name, 
 						phone: p.provider.phone, 
 						category: request.category.name,
-						call_order: p.call_order
+						call_order: p.call_order,
+						external_contact_id: p.id
 					} 
 				})
 		end

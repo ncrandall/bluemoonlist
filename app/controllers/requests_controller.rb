@@ -1,6 +1,7 @@
 class RequestsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:callback]
   before_filter :correct_user, only: [:update, :destroy]
+  skip_before_filter :verify_authenticity_token, only: [:callback]
 
   def index
     @request = Request.new
@@ -75,6 +76,13 @@ class RequestsController < ApplicationController
     redirect_to feed_path
   end
 
+  def callback
+    Rails.logger.info(params)
+
+    respond_to do |format|
+      format.all { render text: "Ok" }
+    end
+  end
 
   private
 
