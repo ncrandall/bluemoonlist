@@ -67,7 +67,7 @@ class Request < ActiveRecord::Base
 	def add_history(params)
 		request_history = RequestHistory.new
 		if params[:contact]
-			self.update_attributes(last_contacted_provider: params[:contact][:id]])
+			self.update_attributes(last_contacted_provider: params[:contact][:id])
 			request_history.status = params[:contact][:status]
 			request_history.request_id = RequestProvider.where(id: params[:contact][:id]).first.request.id
 			request_history.request_provider_id = params[:contact][:id]
