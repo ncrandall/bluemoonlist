@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130618183109) do
+ActiveRecord::Schema.define(version: 20130619003433) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -57,6 +57,14 @@ ActiveRecord::Schema.define(version: 20130618183109) do
   end
 
   add_index "relationships", ["user_id", "neighbor_id"], name: "index_relationships_on_user_id_and_neighbor_id", unique: true, using: :btree
+
+  create_table "request_histories", force: true do |t|
+    t.string   "status"
+    t.integer  "request_id"
+    t.integer  "request_provider_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "request_providers", force: true do |t|
     t.integer  "request_id"

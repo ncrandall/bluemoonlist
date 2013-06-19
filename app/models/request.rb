@@ -21,6 +21,7 @@ class Request < ActiveRecord::Base
 	belongs_to :category
 
 	has_many :request_providers, dependent: :destroy, autosave: true
+	has_many :request_histories, dependent: :destroy
 	# TODO: This relationship will be changed to REST call eventually (see class diagram)
 	# has_one :twilio_job, dependent: :destroy, autosave: true
 
@@ -61,5 +62,19 @@ class Request < ActiveRecord::Base
 
 	def make_calls
 		RequestCallService.new self
+	end
+
+	def add_history(params)
+		request_history = RequestHistory.new
+		if params[:contact]
+			request_history.status = params[:contact][:status]
+			request_history.request_id = RequestProvider.where(id: params[:contact][:id]).first.request.id
+			request_history.request_provider_id = params[:contact][:id]
+		else
+			request_history.status = params[:job][:status]
+			request_history.request_id = params[:job][:id]
+		end
+
+		request_history.save
 	end
 end

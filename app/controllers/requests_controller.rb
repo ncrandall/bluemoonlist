@@ -79,12 +79,19 @@ class RequestsController < ApplicationController
   def callback
     Rails.logger.info(params)
 
+    request = Request.new
+    request.add_history(request_history_params)
+
     respond_to do |format|
       format.all { render text: "Ok" }
     end
   end
 
   private
+
+  def request_history_params
+    params.permit!
+  end
 
   def request_params
     params.require(:request).permit(:phone, :description, :category_id, :status,
