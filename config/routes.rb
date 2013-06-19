@@ -11,6 +11,7 @@ Bluemoonlist::Application.routes.draw do
   resources :requests, except: [:new]
   post '/requests/callback', to: "requests#callback"
   root :to => "static#home"
+  get "/request_histories", to: "request_histories#index"
 
   # Twilio Subsystem Routes
   resources :twilio_jobs, only: [:create, :update]

@@ -58,9 +58,7 @@ class TwilioController < ApplicationController
 		twilio_worker = TwilioWorker.new
 		
 		# if the call was accepted update the request status
-		if contact.accepted?
-			contact.twilio_job.request.update_attributes(status: :paused, last_contacted_provider: contact.phone)
-		else
+		if !contact.accepted?
 			twilio_worker.delay.update_call_list(contact.twilio_job)
 		end
 

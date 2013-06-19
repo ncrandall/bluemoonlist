@@ -1,0 +1,5 @@
+<% unless @histories.empty? %>
+	if($("#firehose img").length > 0)
+		$("#firehose img").remove()
+	$("#firehose").append("<%= raw escape_javascript(render(@histories)) %>");
+<% end %>
