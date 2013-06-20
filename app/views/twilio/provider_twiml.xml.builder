@@ -5,7 +5,7 @@ xml.Response do
 	end
 	xml.Gather action: "/twilio/provider_gather/#{@provider_id}.xml" do 
 		xml.Say voice: "woman" do
-			xml.text!  "press 1 to connect, otherwise hangup"
+			xml.text!  "press 1 then pound to connect, otherwise hangup"
 		end
 	end
 	xml.Say "Goodbye!"
