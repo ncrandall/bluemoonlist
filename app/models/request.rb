@@ -22,9 +22,6 @@ class Request < ActiveRecord::Base
 
 	has_many :request_providers, dependent: :destroy, autosave: true
 	has_many :request_histories, dependent: :destroy
-	# TODO: This relationship will be changed to REST call eventually (see class diagram)
-	# has_one :twilio_job, dependent: :destroy, autosave: true
-
 
 	def status
 		STATUS.key(read_attribute(:status))
@@ -60,8 +57,19 @@ class Request < ActiveRecord::Base
 		self
 	end
 
+	def send_text
+		RequestTextService.new self
+	end
+
 	def make_calls
 		RequestCallService.new self
+	end
+
+	def update_call_status(s)
+		Rails.logger.info("current_status: #{s} new status: #{status}")
+		if s != self.status && s.in?([:active, :paused, :cancelled, :done])
+			RequestUpdateCallService.delay.new self, s
+		end
 	end
 
 	def process_callback(params)
@@ -83,4 +91,5 @@ class Request < ActiveRecord::Base
 
 		request.save unless !request.changed?
 	end
+
 end

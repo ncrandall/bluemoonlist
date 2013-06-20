@@ -46,9 +46,11 @@ class RequestsController < ApplicationController
     params[:request][:status] = params[:request][:status].to_sym unless 
       params[:request][:status].nil?
 
+    request.update_call_status(params[:request][:status])
 
     if request.update_attributes(request_params)
       
+      # TODO: replace with Request.send_text
       if params[:request][:status] == :done
         twilio_worker = TwilioWorker.new
         twilio_worker.delay.send_text(request)

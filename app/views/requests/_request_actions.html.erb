@@ -16,7 +16,7 @@
 	<% end %>
 
 	<% if request.status == :paused %>
-		<% if !request.last_contacted_provider.nil? %>
+		<% if !request.last_contacted_provider_id.nil? %>
 			<%= form_for request do |f| %>
 				<%= f.hidden_field :status, value: "working" %>
 				<%= f.submit "Accept & Send Info", class: "btn btn-primary btn-large" %>
