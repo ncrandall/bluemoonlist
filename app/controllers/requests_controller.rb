@@ -80,7 +80,7 @@ class RequestsController < ApplicationController
     Rails.logger.info(params)
 
     request = Request.new
-    request.add_history(request_history_params)
+    request.process_callback(request_history_params[:job])
 
     respond_to do |format|
       format.all { render text: "Ok" }

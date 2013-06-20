@@ -64,19 +64,23 @@ class Request < ActiveRecord::Base
 		RequestCallService.new self
 	end
 
-	def add_history(params)
-		request_history = RequestHistory.new
-		if params[:contact]
-			request = RequestProvider.where(id: params[:contact][:id]).first.request
-			request.update_attributes(last_contacted_provider_id: params[:contact][:id])
-			request_history.status = params[:contact][:status]
-			request_history.request_id = RequestProvider.where(id: params[:contact][:id]).first.request.id
-			request_history.request_provider_id = params[:contact][:id]
-		else
-			request_history.status = params[:job][:status]
-			request_history.request_id = params[:job][:id]
-		end
+	def process_callback(params)
+		request_history = RequestHistory.new(
+			request: Request.find(params[:id]), 
+			status: params[:status],
+			request_provider_id: params[:contact_id]
+		)
 
+		process_request_from_callback params
 		request_history.save
+	end
+
+	def process_request_from_callback(params)
+		request = Request.where(id: params[:id]).first
+		
+		request.status = params[:status].to_sym unless !params[:status].to_sym.in?(STATUS.keys)
+		request.last_contacted_provider_id = params[:contact_id]
+
+		request.save unless !request.changed?
 	end
 end

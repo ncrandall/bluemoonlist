@@ -2,8 +2,9 @@ class ContactCallbackService
 
 	def initialize(contact, action)
 		callback_params = {
-			contact: {
-				id: contact.external_contact_id,
+			job: {
+				id: contact.twilio_job.external_job_id,
+				contact_id: contact.external_contact_id,
 				status: action,
 				timestamp: Date.new
 			}
