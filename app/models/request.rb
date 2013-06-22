@@ -66,7 +66,6 @@ class Request < ActiveRecord::Base
 	end
 
 	def update_call_status(s)
-		Rails.logger.info("current_status: #{s} new status: #{status}")
 		if s != self.status && s.in?([:active, :paused, :cancelled, :done])
 			RequestUpdateCallService.delay.new self, s
 		end

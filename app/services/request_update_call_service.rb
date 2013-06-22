@@ -1,7 +1,6 @@
 class RequestUpdateCallService
 
 	def initialize(request, status)
-		Rails.logger.info("OK GOT HERE")
 		# TODO: Change the id to the job id once we store the twilio_job id locally
 		url = "#{ENV['CALL_SERVICE_URL']}/twilio_jobs/#{request.id}"
 

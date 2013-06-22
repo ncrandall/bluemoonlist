@@ -79,8 +79,6 @@ class RequestsController < ApplicationController
   end
 
   def callback
-    Rails.logger.info(params)
-
     request = Request.new
     request.process_callback(request_history_params[:job])
 

@@ -26,12 +26,10 @@ class RequestCallService
 		end
 
 		body = call_params.to_json
-		Rails.logger.info(body)
 
 		url = "#{ENV['CALL_SERVICE_URL']}twilio_jobs"
 
 		response = RestClient.post url, body, { content_type: :json }
-		Rails.logger.info("Response: #{response}")
 	end
 
 end
