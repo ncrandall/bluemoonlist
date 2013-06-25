@@ -13,7 +13,7 @@ class RequestsController < ApplicationController
     if @filter == 'self'
       @requests = current_user.requests
     else
-      @requests = current_user.feed
+      @requests = current_user.requests_feed
     end
   end
 

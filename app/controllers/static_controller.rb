@@ -15,12 +15,6 @@ class StaticController < ApplicationController
     @categories = Category.all
     @open_request = current_user.requests.where(status: [0, 1]).any?
 
-  	@filter ||= params[:filter]
-  	
-  	if @filter == 'self'
-  		@requests = current_user.requests
-  	else
-  		@requests = current_user.feed
-  	end
+  	@feed = current_user.feed
   end
 end

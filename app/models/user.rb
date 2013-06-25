@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   validates :zip, length: { maximum: 20 }
 
   has_many :requests
+  has_many :microposts
 
   has_many :relationships, dependent: :destroy
   has_many :neighbors, through: :relationships, dependent: :destroy
@@ -22,7 +23,17 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_relationships, dependent: :destroy, source: :user
 
   def feed
-    Request.from_users_followed_by(self)
+    requests = requests_feed
+    microposts = microposts_feed
+    requests.concat(microposts).sort_by(&:created_at).reverse
+  end
+
+  def requests_feed
+    Request.from_users_followed_by(self).to_a
+  end
+
+  def microposts_feed
+    Micropost.from_users_followed_by(self).to_a
   end
 
   def follow!(other_user)

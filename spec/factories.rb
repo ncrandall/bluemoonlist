@@ -52,4 +52,8 @@ FactoryGirl.define do
 		category "Plumber"
 		call_order 0
 	end
+
+	factory :micropost do
+		sequence(:description) { |n| "Micropots ##{n}"}
+	end
 end

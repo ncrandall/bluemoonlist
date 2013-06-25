@@ -5,17 +5,4 @@
 		</span>
 	</div>
 <% end %>
-<% @requests.each do |request| %>
-	<div class="row">
-		<span class="post offset2 span8">
-			<%= image_tag("no_pic.jpg") %>
-			<%= link_to request.user.full_name, profile_path(request.user) %> Searched for <%= verbose_noun(request.category.name) %><br />
-			<%= time_ago_in_words(request.created_at) + " ago" %>
-		  <% if request.user_id == current_user.id %>
-		  	<%= link_to "Manage", request_path(request) %>
-		  <% else %>
-		  	<%= link_to "Recommend Providers", request_path(request) , class: "btn btn-info" %>
-		  <% end %>
-		</span>
-	</div>
-<% end %>
+<%= render 'shared/row_objects', objects: @requests %>

@@ -26,6 +26,7 @@ describe User do
 	it { should respond_to :followers }
 	it { should respond_to :reverse_relationships }
 	it { should respond_to :follow! }
+	it { should respond_to :microposts }
 
 	it { should be_valid }
 

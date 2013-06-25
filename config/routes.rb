@@ -9,6 +9,7 @@ Bluemoonlist::Application.routes.draw do
   get "/static/about"
   resources :categories
   resources :requests, except: [:new]
+  resources :microposts, except: [:edit]
   post '/requests/callback', to: "requests#callback"
   root :to => "static#home"
   get "/request_histories", to: "request_histories#index"
