@@ -10,6 +10,7 @@ Bluemoonlist::Application.routes.draw do
   resources :categories
   resources :requests, except: [:new]
   resources :microposts, except: [:edit]
+  resources :recommendations, only: [:create, :destroy]
   post '/requests/callback', to: "requests#callback"
   root :to => "static#home"
   get "/request_histories", to: "request_histories#index"

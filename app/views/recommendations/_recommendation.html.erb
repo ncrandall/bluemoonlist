@@ -1,0 +1,8 @@
+<div class="span8 offset2">
+	<h3>Recommend a Provider for <%= current_user.first_name %></h3>
+	<%= form_for recommendation do |f| %>
+		<%= f.hidden_field :request_id, value: @request.id %>
+		<%= f.collection_select :provider_id, @providers, :id, :company_name, class: "span4" %>
+		<%= f.submit "Recommend", class: "btn btn-primary pull-right" %>
+	<% end %>
+</div>

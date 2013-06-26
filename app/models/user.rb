@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :requests
   has_many :microposts
+  has_many :recommendations
 
   has_many :relationships, dependent: :destroy
   has_many :neighbors, through: :relationships, dependent: :destroy

@@ -1,19 +1,24 @@
 <div class="row">
-	<span class="span4">
-		<h4>Request Information</h4>
-		<p>Status: <span class="<%= status_text_class(@request) %>"><%= @request.status %></span></p>
-		<p>Phone: <%= @request.phone %></p>
-		Actions:<br />
+	<% if @request.user_id == current_user.id %>
+		<span class="span4">
+			<h4>Request Information</h4>
+			<p>Status: <span class="<%= status_text_class(@request) %>"><%= @request.status %></span></p>
+			<p>Phone: <%= @request.phone %></p>
+			Actions:<br />
 
-		<h4>Live Update</h4>
-		<div id="firehose" data-id="<%= @request.id %>">
-			<%= render @request.request_histories %>
-		</div>
-		<%= render 'requests/request_actions', request: @request %>
-	</span>
-	<% if @request.status == :invoicing %>
-		<%= render 'requests/request_payment_form', request: @request %>
+			<h4>Live Update</h4>
+			<div id="firehose" data-id="<%= @request.id %>">
+				<%= render @request.request_histories %>
+			</div>
+			<%= render 'request_actions', request: @request %>
+		</span>
+		<% if @request.status == :invoicing %>
+			<%= render 'request_payment_form', request: @request %>
+		<% else %>
+			<%= render 'request_info_form', request: @request %>
+		<% end %>
 	<% else %>
-		<%= render 'requests/request_info_form', request: @request %>
+		<%= render @recommendation %>
 	<% end %>
+	<%= render 'request_timeline', request: @request %>
 </div>

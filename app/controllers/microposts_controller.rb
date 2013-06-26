@@ -1,7 +1,7 @@
 class MicropostsController < ApplicationController
 
 	def index
-		@microposts = Micropost.all
+		@microposts = current_user.microposts
 		@micropost = Micropost.new
 	end
 

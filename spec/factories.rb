@@ -56,4 +56,8 @@ FactoryGirl.define do
 	factory :micropost do
 		sequence(:description) { |n| "Micropots ##{n}"}
 	end
+
+	factory :recommendation do
+
+	end
 end

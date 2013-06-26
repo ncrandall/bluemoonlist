@@ -8,17 +8,13 @@ class RequestsController < ApplicationController
     @categories = Category.all
     @open_request = current_user.requests.where(status: [0, 1]).any?
 
-    @filter ||= params[:filter]
-    
-    if @filter == 'self'
-      @requests = current_user.requests
-    else
-      @requests = current_user.requests_feed
-    end
+    @requests = current_user.requests
   end
 
   def show
     @request = Request.where(id: params[:id]).first
+    @recommendation = Recommendation.new
+    @providers = Provider.joins(:scores).where(scores: { category_id: @request.category_id })
   end
 
   def create
