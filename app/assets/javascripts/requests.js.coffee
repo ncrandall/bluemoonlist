@@ -20,10 +20,8 @@ updateFirehose = ->
 		clearTimeout lastTimeoutId
 		return
 
-$(document).on "page:change", ->
+$(document).ready ->
   if $("#firehose").length > 0
   	lastTimeoutId = setTimeout updateFirehose, 5000 
   else
   	clearTimeout lastTimeoutId
-
-
