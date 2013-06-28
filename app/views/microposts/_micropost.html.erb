@@ -1,2 +1,4 @@
 <%= micropost.description %>
-<%= link_to "delete", micropost, class: "pull-right", method: :DELETE %><br />
+<% if current_user.id == micropost.user.id %>
+<%= link_to "delete", micropost, class: "pull-right", method: :DELETE %>
+<% end %>
