@@ -1,5 +1,11 @@
 <h3><%= @user.full_name %></h3>
 <% if @user != current_user %>
-<input type="submit" value="Follow" /><br /><br />
+<div id="follow-form">
+	<% if current_user.following?(@user) %>
+		<%= render 'unfollow' %>
+	<% else %>
+		<%= render "follow" %>
+	<% end %>
+</div>
 <% end %>
 <%= render 'requests/requests' %>

@@ -37,10 +37,6 @@ class User < ActiveRecord::Base
     Micropost.from_users_followed_by(self).to_a
   end
 
-  def follow!(other_user)
-    relationships.create!(neighbor_id: other_user.id)
-  end
-
   def self.find_for_facebook_oauth(auth, signed_in_resrouce=nil)
     #user = User.where(provider: auth.provider, uid: auth.uid).first
     user = User.where(email: auth.info.email).first
@@ -68,5 +64,17 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name.capitalize} #{last_name.capitalize}"
+  end
+
+  def following?(other_user)
+    relationships.where(neighbor_id: other_user.id).first
+  end
+
+  def follow!(other_user)
+    relationships.create!(neighbor_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    relationships.where(neighbor_id: other_user.id).first.destroy
   end
 end
