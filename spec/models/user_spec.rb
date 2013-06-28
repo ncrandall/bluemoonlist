@@ -9,6 +9,7 @@ describe User do
 	it { should respond_to :uid }
 	it { should respond_to :provider }
 
+	it { should respond_to :image_url }
 	it { should respond_to :first_name }
 	it { should respond_to :last_name }
 	it { should respond_to :street }

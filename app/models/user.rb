@@ -14,9 +14,9 @@ class User < ActiveRecord::Base
   validates :city, length: { maximum: 100 }
   validates :zip, length: { maximum: 20 }
 
-  has_many :requests
-  has_many :microposts
-  has_many :recommendations
+  has_many :requests, dependent: :destroy
+  has_many :microposts, dependent: :destroy
+  has_many :recommendations, dependent: :destroy
 
   has_many :relationships, dependent: :destroy
   has_many :neighbors, through: :relationships, dependent: :destroy
@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
     user = User.where(email: auth.info.email).first
     unless user
       user = User.create(
+        image_url: auth.info.image,
         first_name: auth.extra.raw_info.first_name,
         last_name: auth.extra.raw_info.last_name,
         provider: auth.provider,
