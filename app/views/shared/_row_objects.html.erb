@@ -2,7 +2,7 @@
 <% objects.each do |o| %>
 	<div class="row">
 		<span class="post offset2 span8">
-			<%= image_tag("no_pic.jpg") %>
+			<%= profile_image(o.user) %>
 			<%= link_to o.user.full_name, profile_path(o.user) %> 
 			<%= render o %>
 			<%= time_ago_in_words(o.created_at) %> ago
