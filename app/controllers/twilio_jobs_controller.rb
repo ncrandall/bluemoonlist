@@ -3,7 +3,9 @@ class TwilioJobsController < ApplicationController
 
 	def create
 		twilio_job = TwilioJob.new(twilio_job_params)
-		twilio_job.build_contact_list(twilio_contact_params)
+		twilio_job.build_contact_list(twilio_contact_params) unless params[:providers].nil?
+
+		params[:twilio_job][:status] = params[:twilio_job][:status].to_sym unless params[:twilio_job][:status].nil?
 
 		if twilio_job.save
 			twilio_job.start_job
@@ -40,7 +42,7 @@ class TwilioJobsController < ApplicationController
 	end
 
 	def twilio_job_params
-		params.require(:twilio_job).permit(:status, :name, :phone, :status_callback, :contact_method, :external_job_id)
+		params.require(:twilio_job).permit(:status, :name, :phone, :status_callback, :contact_method, :external_job_id, :body)
 	end
 
 	def twilio_contact_params

@@ -62,16 +62,14 @@ class TwilioWorker
 
 
   # Makes a REST call to twilio to send a text message to a provder
-  def send_text(request)
+  def send_text(twilio_job)
     from = '+18015131966'
-
-    str = "#{request.description}\n\n#{request.street}\n#{request.city} #{request.state}, #{request.zip}"
 
     req_params = {
       from: from,
-      to: request.last_contacted_provider,
+      to: twilio_job.phone,
       status_callback: "#{ENV['CALL_SERVICE_URL']}twilio/provider_text_status_callback.xml",
-      body: str
+      body: twilio_job.body
     }
 
     if Rails.env == "development"
