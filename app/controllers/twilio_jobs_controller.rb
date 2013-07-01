@@ -3,7 +3,7 @@ class TwilioJobsController < ApplicationController
 
 	def create
 		twilio_job = TwilioJob.new(twilio_job_params)
-		twilio_job.build_contact_list(twilio_contact_params) unless params[:providers].nil?
+		twilio_job.build_contact_list(twilio_contact_params) unless params[:twilio_job][:providers].nil?
 
 		if twilio_job.save
 			twilio_job.start_job
