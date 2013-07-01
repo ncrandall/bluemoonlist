@@ -5,8 +5,6 @@ class TwilioJobsController < ApplicationController
 		twilio_job = TwilioJob.new(twilio_job_params)
 		twilio_job.build_contact_list(twilio_contact_params) unless params[:providers].nil?
 
-		params[:twilio_job][:status] = params[:twilio_job][:status].to_sym unless params[:twilio_job][:status].nil?
-
 		if twilio_job.save
 			twilio_job.start_job
 			@message = { success: true, id: twilio_job.id }
