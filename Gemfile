@@ -6,6 +6,9 @@ gem 'rails', '4.0'
 
 gem 'pg'
 
+# heroku rails 12factor for logging and static assets
+gem 'rails_12factor'
+
 gem 'devise', '3.0.0.rc'
 gem 'omniauth'
 gem 'omniauth-facebook'
