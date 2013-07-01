@@ -16,6 +16,6 @@ module UsersHelper
 			tmp.query = "type=large"
 			url = tmp.to_s
 		end
-		image_tag(url)
+		image_tag(url, class: 'img-polaroid')
 	end
 end

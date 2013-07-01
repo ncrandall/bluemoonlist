@@ -7,7 +7,7 @@ updateFirehose = ->
 	request_id = $("#firehose").attr("data-id")
 
 	if($('.update').length > 0)
-		after = $('.update:last-child').attr("data-id")
+		after = $('.update:first-child').attr("data-id")
 	else
 		after = 0
 	$.getScript('/request_histories.js?request_id=' + request_id  + '&after=' + after)

@@ -19,6 +19,7 @@
 		<% if !request.last_contacted_provider_id.nil? %>
 			<%= form_for request do |f| %>
 				<%= f.hidden_field :status, value: "working" %>
+				<%= f.hidden_field :send_text, value: "1" %>
 				<%= f.submit "Accept & Send Info", class: "btn btn-primary btn-large" %>
 			<% end %>
 			<br /><br />
