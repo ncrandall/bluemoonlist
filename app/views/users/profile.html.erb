@@ -1,4 +1,5 @@
 <h3><%= @user.full_name %></h3>
+<%= render 'user_stats', user: @user %>
 <% if @user != current_user %>
 <div id="follow-form">
 	<% if current_user.following?(@user) %>
