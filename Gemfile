@@ -6,9 +6,7 @@ gem 'rails', '4.0'
 
 gem 'pg'
 
-# heroku rails 12factor for logging and static assets
-gem 'rails_12factor'
-
+# Authentication & Facebook login
 gem 'devise', '3.0.0.rc'
 gem 'omniauth'
 gem 'omniauth-facebook'
@@ -57,9 +55,12 @@ group :test do
 end
 
 group :test, :development do
-	# Use sqlite3 as the database for Active Record
-	# gem 'sqlite3'
 	gem 'factory_girl_rails', '4.2.1'
+end
+
+group :production do
+	# heroku rails 12factor for logging and static assets
+	gem 'rails_12factor'
 end
 
 # Use ActiveModel has_secure_password
