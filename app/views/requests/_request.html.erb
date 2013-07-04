@@ -1,7 +1,2 @@
-Searched for <%= verbose_noun(request.category.name) %><br />
-
-<% if request.user_id == current_user.id %>
-	<%= link_to "Manage", request_path(request), class: "btn btn-primary pull-right" %>
-<% else %>
-	<%= link_to "Recommend Providers", request_path(request) , class: "btn btn-info pull-right" %>
-<% end %>
+Searched for <%= link_to verbose_noun(request.category.name), request %>
+<%= link_to("Recommend Providers", request_path(request) , class: "pull-right") unless current_user.id == request.user_id %>
