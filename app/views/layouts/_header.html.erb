@@ -1,12 +1,11 @@
 <div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
+	<div id="header">
 		<div class="container">
 			<span class="pull-left"><h3 id="logo"><%= link_to "Bluemoonlist", root_path %></h3></span>
 			<nav>
 				<ul class="nav pull-right">
 					<% if signed_in? %>
 					<li><%= link_to "My Requests", requests_path %></li>
-					<li><%= link_to "Posts", microposts_path %></li>
 					<li><%= link_to "My Account", edit_user_registration_path %></li>
 					<li><%= link_to "Sign out", destroy_user_session_path, method: :DELETE %></li>
 					<% else %>

@@ -5,7 +5,6 @@
 			<%= profile_image(o.user) %>
 			<%= link_to o.user.full_name, profile_path(o.user) %> 
 			<%= render o %><br />
-			<%= time_ago_in_words(o.created_at) %> ago
 		</span>
 	</div>
 <% end %>

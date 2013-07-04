@@ -1,15 +1,40 @@
 @import 'bootstrap';
 
+@font-face {
+	font-family:"standard-font";
+	src:url("/latest.ttf")
+}
+
 html, body {
-	height: 100%
+	height: 100%;
+	font-family: standard-font !important;
+	font-size: 14pt;
 }
 
 #logo {
 	margin: 0;
+	font-family: standard-font;
+	a {
+		color: #FFF;
+	}
 	a:hover {
 		text-decoration: none;
-		color: #0088cc;
+		color: #FFF;
 	}
+}
+
+.navbar {
+	.nav {
+		li {
+			a {
+			  text-shadow: none !important;
+			  color: #FFF;
+		  }
+		  a:hover {
+		    color: #EEE;
+		  }
+	  }
+  }
 }
 
 .container-top {
@@ -19,24 +44,36 @@ html, body {
 }
 
 .post {
+	img {
+		position: absolute;
+		left: 0;
+		top: 10px;
+	}
 	margin-top: 15px;
 	margin-bottom: 15px;
-	padding: 5px 0px;
-	/* height: 80px; */
+	padding: 5px 0px 5px 65px;
+	height: 70px;
 	border-top: 1px solid #ccc;
 	position: relative;
+	font-size: 16pt;
 	.options {
 		position: absolute;
 		bottom: 0;
-		right: 0;
+		left: 65px;
+		font-size: 12pt;
 	}
 }
+
 
 #wrap {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
 	margin: 0 auto -150px;
+}
+
+#header {
+	background-color: #0088CC;
 }
 
 #footer {
