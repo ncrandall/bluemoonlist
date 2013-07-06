@@ -1,7 +1,7 @@
 <span class="request_actions">
 
 	<% if request.status == :invoicing %>
-		<%= form_for request do |f| %>
+		<%= form_for request, remote: true do |f| %>
 			<%= f.hidden_field :status, value: "done" %>
 			<%= f.submit "Send Payment", class: "btn btn-primary btn-large" %>
 		<% end %>
@@ -9,7 +9,7 @@
 
 
 	<% if request.status == :working %>
-		<%= form_for request do |f| %>
+		<%= form_for request, remote: true do |f| %>
 			<%= f.hidden_field :status, value: "invoicing" %>
 			<%= f.submit "Work Finished", class: "btn btn-success" %>
 		<% end %>
@@ -17,7 +17,7 @@
 
 	<% if request.status == :paused %>
 		<% if !request.last_contacted_provider_id.nil? %>
-			<%= form_for request do |f| %>
+			<%= form_for request, remote: true do |f| %>
 				<%= f.hidden_field :status, value: "working" %>
 				<%= f.hidden_field :send_text, value: "1" %>
 				<%= f.submit "Accept & Send Info", class: "btn btn-primary btn-large" %>
@@ -25,21 +25,21 @@
 			<br /><br />
 		<% end %>
 
-		<%= form_for request do |f| %>
+		<%= form_for request, remote: true do |f| %>
 			<%= f.hidden_field :status, value: "active" %>
 			<%= f.submit "Resume", class: "btn btn-success" %>
 		<% end %>
 	<% end %>
 
 	<% if request.status == :active %>
-		<%= form_for request do |f| %>
+		<%= form_for request, remote: true do |f| %>
 			<%= f.hidden_field :status, value: "paused" %>
 			<%= f.submit "Pause", class: "btn btn-warning" %>
 		<% end %>
 	<% end %>
 
 	<% if request.status != :cancelled && request.status != :done %>
-		<%= form_for request do |f| %>
+		<%= form_for request, remote: true do |f| %>
 			<%= f.hidden_field :status, value: "cancelled" %>
 			<%= f.submit "Cancel", class: "btn" %>
 		<% end %>

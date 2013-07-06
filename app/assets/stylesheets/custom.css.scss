@@ -51,11 +51,15 @@ html, body {
 	}
 	margin-top: 15px;
 	margin-bottom: 15px;
-	padding: 5px 0px 5px 65px;
+	padding: 5px 0px;
 	height: 70px;
 	border-top: 1px solid #ccc;
 	position: relative;
 	font-size: 16pt;
+	.text {
+		position: absolute;
+		left: 65px;
+	}
 	.options {
 		position: absolute;
 		bottom: 0;

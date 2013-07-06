@@ -1,22 +1,18 @@
 <div class="row">
+	<span class="offset2 span8">
+		<%= render @request %>
+	</span>
+</div>
+<div class="row">
 	<% if @request.user_id == current_user.id %>
-		<span class="span4">
+		<span class="offset2 span3">
 			<h4>Request Information</h4>
-			<p>Status: <span class="<%= status_text_class(@request) %>"><%= @request.status %></span></p>
+			<p>Status: <b><span id="status" class="<%= status_text_class(@request) %>"><%= @request.status %></span></b></p>
 			<p>Phone: <%= @request.phone %></p>
-			Actions:<br />
-
-			<h4>Live Update</h4>
-			<div id="firehose" data-id="<%= @request.id %>">
-				<%= render @request.request_histories %>
-			</div>
-			<%= render 'request_actions', request: @request %>
 		</span>
-		<% if @request.status == :invoicing %>
-			<%= render 'request_payment_form', request: @request %>
-		<% else %>
-			<%= render 'request_info_form', request: @request %>
-		<% end %>
+		<span id="request_forms" class="span5">
+			<%= render 'request_forms' %>
+		</span>
 	<% else %>
 		<%= render @recommendation %>
 	<% end %>

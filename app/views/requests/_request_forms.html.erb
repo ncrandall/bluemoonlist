@@ -1,0 +1,7 @@
+<%= render 'request_info_fields', request: @request%>
+<% if @request.status == :invoicing %>
+	<%= render 'request_payment_form', request: @request %>
+<% end %>
+<div id="request_actions" class="pull-right">
+	<%= render 'request_actions', request: @request %>
+</div>

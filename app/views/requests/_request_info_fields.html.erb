@@ -1,0 +1,11 @@
+<h4>Send info to provider when you accept (optional):</h4>
+<%= form_for request do |f| %>
+	<%= f.text_area :description, placeholder: "Work Description", class: "span5" %>
+
+	<%= f.text_field :street, placeholder: :street, class: "span5" %>
+
+	<%= f.text_field :city, placeholder: :city, class: "span2" %>
+	<%= f.text_field :state, placeholder: :state, class: "span1" %>
+	<%= f.text_field :zip, placeholder: :zip, class: "span2" %>
+
+<% end %>

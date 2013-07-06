@@ -1,11 +1,5 @@
-<div class="row">
-<% objects.each do |o| %>
-	<div class="row">
-		<span class="post offset2 span8">
-			<%= profile_image(o.user) %>
-			<%= link_to o.user.full_name, profile_path(o.user) %> 
-			<%= render o %><br />
-		</span>
-	</div>
+<span class="offset2 span8">
+	<% objects.each do |o| %>
+	<%= render o %>
 <% end %>
-</div>
+</span>

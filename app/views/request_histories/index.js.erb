@@ -1,5 +1,3 @@
 <% unless @histories.empty? %>
-	if($("#firehose img").length > 0)
-		$("#firehose img").remove()
-	$("#firehose").prepend("<%= raw escape_javascript(render(@histories)) %>");
+	$("#histories").prepend("<%= raw escape_javascript(render(@histories)) %>")
 <% end %>

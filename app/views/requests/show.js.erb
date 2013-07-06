@@ -1,0 +1,3 @@
+$('#status').html('<%= @request.status %>')
+$('#status').attr('class', '<%= status_text_class(@request) %>')
+$('#request_forms').html('<%= raw escape_javascript(render('request_forms', request: @request))%>')

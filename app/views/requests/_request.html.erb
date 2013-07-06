@@ -1,5 +1,11 @@
-Searched for <b><%= link_to verbose_noun(request.category.name), request %></b>
-<span class="options">
-	<i><%= time_ago_in_words(request.created_at) %> ago</i> &nbsp;&nbsp;
-	<b><%= link_to("Recommend Providers", request) unless current_user.id == request.user_id %></b>
-</span>
+<div class="row">
+	<span class="post span8">
+		<%= profile_image(request.user) %>
+		<span class="text"><%= link_to request.user.full_name, profile_path(request.user) %> searched for <b><%= link_to verbose_noun(request.category.name), request %></b>
+		</span>
+		<span class="options">
+			<i><%= time_ago_in_words(request.created_at) %> ago</i> &nbsp;&nbsp;
+			<b><%= link_to("Recommend Providers", request) unless current_user.id == request.user_id %></b>
+		</span>
+	</span>
+</div>

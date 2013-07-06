@@ -1,5 +1,13 @@
-<%= micropost.description %>
-<span class="options">
-	<i><%= time_ago_in_words(micropost.created_at) %> ago</i> &nbsp;&nbsp;
-	<b><%= link_to("delete", micropost, method: :DELETE) unless current_user.id == micropost.user.id %></b>
-</span>
+<div class="row">
+	<span class="post span8">
+		<%= profile_image(micropost.user) %>
+		<span class="text">
+			<%= link_to micropost.user.full_name, profile_path(micropost.user) %>
+			<%= micropost.description %>
+		</span>
+		<span class="options">
+			<i><%= time_ago_in_words(micropost.created_at) %> ago</i> &nbsp;&nbsp;
+			<b><%= link_to("delete", micropost, method: :DELETE) unless current_user.id == micropost.user.id %></b>
+		</span>
+	</span>
+</div>

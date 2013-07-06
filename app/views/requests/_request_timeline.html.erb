@@ -1,11 +1,8 @@
 <div class="span8 offset2">
 	<h3>Timeline</h3>
-	<%= link_to request.user.full_name, profile_path(request.user) %>
-	<%= render request, disable_recommend: true%>
-	<%= time_ago_in_words(request.created_at) %> ago
 </div>
+<div id="histories" data-id="<%= request.id %>">
 <% request.request_histories.each do |rh| %>
-	<div class="post span8 offset2">
-		<%= render rh %>
-	</div>
+	<%= render rh %>
 <% end %>
+</div>

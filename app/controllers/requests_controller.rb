@@ -15,6 +15,11 @@ class RequestsController < ApplicationController
     @request = Request.where(id: params[:id]).first
     @recommendation = Recommendation.new
     @providers = Provider.joins(:scores).where(scores: { category_id: @request.category_id })
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
@@ -32,25 +37,18 @@ class RequestsController < ApplicationController
     end
   end
 
-  #def edit
-  #end
-
   def update
-    request = current_user.requests.where(id: params[:id]).first
+    @request = current_user.requests.where(id: params[:id]).first
 
     # convert status param to symbol
     params[:request][:status] = params[:request][:status].to_sym unless 
       params[:request][:status].nil?
 
-    request.update_call_status(params[:request][:status])
+    @request.update_call_status(params[:request][:status])
 
-    if request.update_attributes(request_params)
-      
-      # TODO: replace with Request.send_text
+    if @request.update_attributes(request_params)
       if params[:request][:send_text]
-        request.delay.send_text
-        #twilio_worker = TwilioWorker.new
-        #twilio_worker.delay.send_text(request)
+        @request.delay.send_text
       end
       
       flash[:success] = "Upated your request successfully"
@@ -59,8 +57,8 @@ class RequestsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to request_path(request) }
-      format.js
+      format.html { redirect_to @request }
+      format.js { render 'show' }
     end
   end
 
@@ -86,6 +84,7 @@ class RequestsController < ApplicationController
 
   private
 
+  # TODO: Restrict this to safe params
   def request_history_params
     params.permit!
   end
