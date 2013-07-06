@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#request_actions form{
-	display: inline;
+#request_actions {
+	clear: both;
+	form{
+		display: inline;
+	}
+	margin-top: 5px;
 }

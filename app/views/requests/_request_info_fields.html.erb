@@ -1,11 +1,26 @@
-<h4>Send info to provider when you accept (optional):</h4>
-<%= form_for request do |f| %>
-	<%= f.text_area :description, placeholder: "Work Description", class: "span5" %>
+<% if request.status.in? [:active, :paused] %>
+	<h4>Send info to provider when you accept (optional):</h4>
+	<%= form_for request do |f| %>
+		<%= f.text_area :description, placeholder: "Work Description", class: "span5" %>
 
-	<%= f.text_field :street, placeholder: :street, class: "span5" %>
+		<%= f.text_field :street, placeholder: :street, class: "span5" %>
 
-	<%= f.text_field :city, placeholder: :city, class: "span2" %>
-	<%= f.text_field :state, placeholder: :state, class: "span1" %>
-	<%= f.text_field :zip, placeholder: :zip, class: "span2" %>
-
+		<%= f.text_field :city, placeholder: :city, class: "span2" %>
+		<%= f.text_field :state, placeholder: :state, class: "span1" %>
+		<%= f.text_field :zip, placeholder: :zip, class: "span2" %>
+		<% if request.status == :paused %>
+			<% if !request.last_contacted_provider_id.nil? %>
+				<%= f.hidden_field :status, value: "working" %>
+				<%= f.hidden_field :send_text, value: "1" %>
+				<%= f.submit "Accept & Send Info", class: "btn btn-primary btn-large" %>
+			<% end %>
+		<% end %>
+	<% end %>
+<% else %>
+	<h4>Data sent to provider:</h4>
+	<small>
+		<%= request.description %><br /><br />
+		<%= request.street %><br />
+		<%= request.city %>, <%= request.state %> <%= request.zip %>
+	</small>
 <% end %>
