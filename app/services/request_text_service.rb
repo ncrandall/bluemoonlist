@@ -11,7 +11,8 @@ class RequestTextService
 				status: 0,
 				name: request_provider.provider.full_name,
 				external_job_id: request.id,
-				body: "#{request.description}\n\n#{request.street}\n#{request.city} #{request.state}, #{request.zip}"
+				body: "#{request.description}\n\n#{request.street}\n#{request.city} #{request.state}, 
+				#{request.zip}\n\nphone: #{request.phone}"
 			}
 		}
 		url = "#{ENV['CALL_SERVICE_URL']}twilio_jobs"
