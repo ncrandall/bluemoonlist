@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 lastTimeoutId = null
+request_status = null
 
 updateHistories = ->
 	request_id = $("#histories").attr("data-id")
@@ -10,12 +11,14 @@ updateHistories = ->
 		after = $('.update:first-child').attr("data-id")
 	else
 		after = 0
-	$.getScript('/request_histories.js?request_id=' + request_id  + '&after=' + after)
-	$.getScript('/requests/' + request_id + '.js')
-	#console.log("Calling request:" + request_id + " time: " + after)
+
+	unless request_status is 'done'
+		console.log("Why I called? status: " + request_status)
+		$.getScript('/request_histories.js?request_id=' + request_id  + '&after=' + after)
+		$.getScript('/requests/' + request_id + '.js')
 
 	if $("#histories").length > 0
-		lastTimeoutId = setTimeout updateHistories, 5000
+		lastTimeoutId = setTimeout updateHistories, 5000	
 	else
 		clearTimeout lastTimeoutId
 		return
@@ -23,5 +26,6 @@ updateHistories = ->
 $(document).ready ->
   if $("#histories").length > 0
   	lastTimeoutId = setTimeout updateHistories, 5000 
+  	request_status = $('#status').html()
   else
   	clearTimeout lastTimeoutId

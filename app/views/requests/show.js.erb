@@ -1,3 +1,9 @@
-$('#status').html('<%= @request.status %>')
-$('#status').attr('class', '<%= status_text_class(@request) %>')
-$('#request_forms').html('<%= raw escape_javascript(render('request_forms', request: @request))%>')
+var status = '<%= @request.status %>'
+// TODO: do this check in controller
+console.log(status + ":" + $('#status').html())
+if(status != $('#status').html())
+{
+	$('#status').html('<%= @request.status %>')
+	$('#status').attr('class', '<%= status_text_class(@request) %>')
+	$('#request_forms').html('<%= raw escape_javascript(render('request_forms', request: @request))%>')
+}
