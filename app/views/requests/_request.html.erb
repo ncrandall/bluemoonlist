@@ -7,5 +7,10 @@
 			<i><%= time_ago_in_words(request.created_at) %> ago</i> &nbsp;&nbsp;
 			<b><%= link_to("Recommend Providers", request) unless current_user.id == request.user_id %></b>
 		</span>
+    <span class="status">
+      <div class="circle <%= request.status.to_s %>">
+      </div>
+      <small><%= request.status.to_s %></small>
+    </span>
 	</span>
 </div>

@@ -99,3 +99,43 @@ html, body {
 		}
 	}
 }
+
+
+#request_actions {
+  clear: both;
+  form{
+    display: inline;
+  }
+  margin-top: 5px;
+}
+
+.status {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  height: 50px;
+  width: 100px;
+  div {
+    height: 20px;
+    width: 20px;
+    @include border-radius(10px);
+  }
+  .active {
+    background-color: $btnSuccessBackground;
+  }
+  .paused {
+    background-color: $btnWarningBackground;
+  }
+  .working {
+    background-color: $btnInfoBackground;
+  }
+  .invoicing {
+    background-color: $btnInverseBackground;
+  }
+  .done {
+    background-color: $btnPrimaryBackground;
+  }
+  .cancelled {
+    background-color: $btnBorder;
+  }
+}
