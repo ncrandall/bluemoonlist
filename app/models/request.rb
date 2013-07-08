@@ -43,12 +43,12 @@ class Request < ActiveRecord::Base
 	end
 
 	def user_has_open_request
-		if Request.where(status: [0, 1], user_id: user_id).any? && status.in?([:active,:paused])
+		if Request.open_request(user_id) && status.in?([:active,:paused])
 			errors.add(:user_id, "has an open request")
 		end
 	end
 
-	def get_open_request_for_user(id)
+	def self.open_request(id)
 		Request.where(status: [0, 1], user_id: id).first
 	end
 

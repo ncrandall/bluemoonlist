@@ -2,12 +2,22 @@
 <%= form_for @request do |f| %>
 	<div class="row">
 		<span class="offset2 span8">
-		<h4>What are you looking for?</h4>
-			<%= f.collection_select :category_id, @categories, :id, :name %>
-			<%= f.text_field :phone, placeholder: :phone %>
-			<span class="options">
-				<%= f.submit "Request Call", class: "btn btn-primary pull-right" %>
-			</span>
+			<% if @request.id.nil? %>
+				<h4>What are you looking for?</h4>
+				<%= f.collection_select :category_id, @categories, :id, :name %>
+				<%= f.text_field :phone, placeholder: :phone %>
+				<span class="bold">
+					<%= f.submit "Request Call", class: "btn btn-primary pull-right" %>
+				</span>
+			<% else %>
+				<h4>You have an active request</h4>
+				<p><small>Click "View Request" to manage your current request</small></p>
+				<%= f.collection_select :category_id, @categories, :id, :name, {} ,disabled: true %>
+				<%= f.text_field :phone, placeholder: :phone, disabled: true %>
+				<span class="bold">
+					<%= link_to "View Request", @request, class: "btn btn-info pull-right" %>
+				</span>
+			<% end %>
 		</span>
 	</div>
 <% end %>

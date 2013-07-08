@@ -4,9 +4,8 @@ class RequestsController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:callback]
 
   def index
-    @request = Request.new
+    @request = Request.open_request(current_user.id) || Request.new
     @categories = Category.all
-    @open_request = current_user.requests.where(status: [0, 1]).any?
 
     @requests = current_user.requests
   end

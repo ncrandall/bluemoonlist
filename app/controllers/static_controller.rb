@@ -11,9 +11,8 @@ class StaticController < ApplicationController
   end
 
   def feed
-    @request = Request.new
+    @request = Request.open_request(current_user.id) || Request.new
     @categories = Category.all
-    @open_request = current_user.requests.where(status: [0, 1]).any?
 
   	@feed = current_user.feed
   end
