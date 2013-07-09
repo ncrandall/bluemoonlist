@@ -4,9 +4,9 @@ class RequestHistory < ActiveRecord::Base
 	belongs_to :request
 
   def to_text
+    provider = RequestProvider.where(id: request_provider_id).first.provider
     case status
     when "calling"
-      provider = RequestProvider.where(id: request_provider_id).first.provider
       "Calling #{provider.company_name}"
     when "paused"
       "Connecting user to call"
