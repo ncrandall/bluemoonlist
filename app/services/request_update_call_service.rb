@@ -12,6 +12,8 @@ class RequestUpdateCallService
 		}.to_json
 
 		RestClient.put url, params, { content_type: :json }
-	end
 
+		# Add the history to the timeline
+		request.histories.create(status: status, request_provider_id: request.last_contacted_provider_id)
+	end
 end
