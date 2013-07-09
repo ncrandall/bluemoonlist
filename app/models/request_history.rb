@@ -9,7 +9,7 @@ class RequestHistory < ActiveRecord::Base
       provider = RequestProvider.where(id: request_provider_id).first.provider
       "Calling #{provider.company_name}"
     when "paused"
-      "Connecting to user to call"
+      "Connecting user to call"
     when "working"
       "Waiting for #{provider.company_name} to complete work request"
     when "invoicing"

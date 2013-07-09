@@ -67,8 +67,12 @@ class Request < ActiveRecord::Base
 	end
 
 	def update_call_status(s)
-		if s != self.status && s.in?([:active, :paused, :cancelled, :done])
-			RequestUpdateCallService.delay.new self, s
+		if s != self.status 
+			if s.in?([:active, :paused, :cancelled, :done])
+				RequestUpdateCallService.delay.new self, s
+			end
+			# Add the history to the timeline
+			self.request_histories.create(status: s, request_provider_id: self.last_contacted_provider_id)
 		end
 	end
 
