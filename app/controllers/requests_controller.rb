@@ -90,7 +90,7 @@ class RequestsController < ApplicationController
 
   def request_params
     params.require(:request).permit(:phone, :description, :category_id, :status,
-      :street, :city, :state, :zip, :last_contacted_provider)
+      :street, :city, :state, :zip, :last_contacted_provider_id)
   end
 
   def correct_user

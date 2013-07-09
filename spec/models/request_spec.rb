@@ -19,6 +19,7 @@ describe Request do
 	it { should respond_to :category_id }
 	it { should respond_to :last_contacted_provider_id }
 	it { should respond_to :request_providers }
+	it { should respond_to :rating }
 	it { should be_valid }
 
 	# validations

@@ -6,7 +6,7 @@ describe 'Request Pages' do
 	let(:user) { FactoryGirl.create(:user) }
 	let(:category) { FactoryGirl.create(:category) }
 	let(:other_user) { FactoryGirl.create(:user) }
-	let(:request) { FactoryGirl.build(:request, user: user, status: :working, category: category) }
+	let(:request) { FactoryGirl.build(:request, user: user, status: :paused, category: category) }
 
 	before { sign_in_user(user) }
 

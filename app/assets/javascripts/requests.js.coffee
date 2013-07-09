@@ -13,7 +13,6 @@ updateHistories = ->
 		after = 0
 
 	unless request_status is 'done'
-		console.log("Why I called? status: " + request_status)
 		$.getScript('/request_histories.js?request_id=' + request_id  + '&after=' + after)
 		$.getScript('/requests/' + request_id + '.js')
 

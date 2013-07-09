@@ -1,6 +1,9 @@
+<br />
 <h4>Payment Info</h4>
 <% if request.status == :done %>
-	Payment Sent!
+	<small>
+    Payment Sent!
+  </small>
 <% else %>
 	<%= form_tag request do |f| %>
 		<%= text_field_tag "ammount", "", placeholder: "Amount", class: "span2" %>

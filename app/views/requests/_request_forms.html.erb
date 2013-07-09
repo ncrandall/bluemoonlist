@@ -1,6 +1,11 @@
-<%= render 'request_info_fields', request: @request%>
+<% if @request.status != :active %>
+  <%= render 'request_info_fields', request: @request%>
+<% end %>
+<% if @request.status.in? [:working, :invoicing, :done] %>
+  <%= render 'request_rating_form', request: @request %>
+<% end %>
 <% if @request.status.in? [:invoicing, :done] %>
-	<%= render 'request_payment_form', request: @request %>
+  <%= render 'request_payment_form', request: @request %>
 <% end %>
 <div id="request_actions">
 	<%= render 'request_actions', request: @request %>

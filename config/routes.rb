@@ -12,6 +12,7 @@ Bluemoonlist::Application.routes.draw do
   resources :microposts, except: [:edit]
   resources :recommendations, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :ratings, only: [:create, :destroy]
   resources :providers, only: [:index, :show]
   post '/requests/callback', to: "requests#callback"
   root :to => "static#home"

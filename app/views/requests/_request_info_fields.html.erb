@@ -1,6 +1,6 @@
 <% if request.status.in? [:active, :paused] %>
 	<h4>Send info to provider when you accept (optional):</h4>
-	<%= form_for request do |f| %>
+	<%= form_for request, remote: true do |f| %>
 		<%= f.text_area :description, placeholder: "Work Description", class: "span5" %>
 
 		<%= f.text_field :street, placeholder: :street, class: "span5" %>

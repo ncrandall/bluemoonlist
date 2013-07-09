@@ -22,6 +22,7 @@ class Request < ActiveRecord::Base
 
 	has_many :request_providers, dependent: :destroy, autosave: true
 	has_many :request_histories, dependent: :destroy
+	has_one :rating
 
 	def status
 		STATUS.key(read_attribute(:status))
@@ -91,4 +92,7 @@ class Request < ActiveRecord::Base
 		request.save unless !request.changed?
 	end
 
+	def last_contacted_provider
+		self.request_providers.where(id: last_contacted_provider_id).first.provider
+	end
 end

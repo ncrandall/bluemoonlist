@@ -60,4 +60,9 @@ FactoryGirl.define do
 	factory :recommendation do
 
 	end
+
+	factory :rating do
+		sequence(:description) { |n| "Provider Rating ##{n}"}
+		rating { (rand * rand(10)) }
+	end
 end
