@@ -1,4 +1,4 @@
-class TwilioJob < ActiveRecord::Base
+class CallJob < ActiveRecord::Base
 	STATUS = { active: 0, paused: 1, cancelled: 2, done: 3 }
   CONTACT_METHOD = { call: 0, text: 1 }
 
@@ -48,7 +48,7 @@ class TwilioJob < ActiveRecord::Base
 
   def start_job
     twilio_worker = TwilioWorker.new
-    twilio_worker.delay.begin_twilio_job(self)
+    twilio_worker.delay.begin_call_job(self)
   end
 
   def make_callback(action)

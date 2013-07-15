@@ -4,7 +4,7 @@ class RequestTextService
 		request_provider = RequestProvider.where(id: request.last_contacted_provider_id).first
 
 		params = {
-			twilio_job: {
+			call_job: {
 				phone: request_provider.provider.phone,
 				contact_method: 1,
 				status_callback: "#{ENV['BLUEMOONLIST_URL']}requests/callback",
@@ -15,7 +15,7 @@ class RequestTextService
 				#{request.zip}\n#{request.phone}"
 			}
 		}
-		url = "#{ENV['CALL_SERVICE_URL']}twilio_jobs"
+		url = "#{ENV['CALL_SERVICE_URL']}call_jobs"
 
 		RestClient.post url, params, { content_type: :json }  
 	end

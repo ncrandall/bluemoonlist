@@ -18,8 +18,8 @@ Bluemoonlist::Application.routes.draw do
   root :to => "static#home"
   get "/request_histories", to: "request_histories#index"
 
-  # Twilio Subsystem Routes
-  resources :twilio_jobs, only: [:create, :update]
+  # Call Subsystem Routes
+  resources :call_jobs, only: [:create, :update]
 
   post "/twilio/provider_twiml/:id", to: "twilio#provider_twiml"
   post "/twilio/provider_gather/:id", to: "twilio#provider_gather"

@@ -40,7 +40,7 @@ FactoryGirl.define do
 		sequence(:name) { |n| "Plumber#{n}" }
 	end
 
-	factory :twilio_job do
+	factory :call_job do
 		name "John Doe"
 		phone "555-555-5555"
 		contact_method 0

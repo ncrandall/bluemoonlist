@@ -35,7 +35,7 @@ class TwilioController < ApplicationController
 			contact.delay.make_callback("paused")
 			contact.accepted = true
 			contact.save
-			@number = contact.twilio_job.phone
+			@number = contact.call_job.phone
 		else
 			render 'end_call'
 		end
@@ -59,7 +59,7 @@ class TwilioController < ApplicationController
 		
 		# if the call was accepted update the request status
 		if !contact.accepted?
-			twilio_worker.delay.update_call_list(contact.twilio_job)
+			twilio_worker.delay.update_call_list(contact.call_job)
 		end
 
 		# save request to history

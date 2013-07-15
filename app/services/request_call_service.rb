@@ -2,7 +2,7 @@ class RequestCallService
 
 	def initialize(request)
 		call_params = { 
-			twilio_job: {
+			call_job: {
 				name: request.user.full_name,
 				phone: request.phone,
 				status: 0,
@@ -14,7 +14,7 @@ class RequestCallService
 		}
 
 		request.request_providers.each do |p|
-			call_params[:twilio_job][:providers].push(
+			call_params[:call_job][:providers].push(
 				{ provider:	{ 
 						name: p.provider.full_name, 
 						phone: p.provider.phone, 
@@ -27,7 +27,7 @@ class RequestCallService
 
 		body = call_params.to_json
 
-		url = "#{ENV['CALL_SERVICE_URL']}twilio_jobs"
+		url = "#{ENV['CALL_SERVICE_URL']}call_jobs"
 
 		response = RestClient.post url, body, { content_type: :json }
 	end

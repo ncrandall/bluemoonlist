@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe TwilioJob do
+describe CallJob do
 
-	let(:twilio_job) { FactoryGirl.build(:twilio_job, external_job_id: 0, status: 0) }
+	let(:call_job) { FactoryGirl.build(:call_job, external_job_id: 0, status: 0) }
 
-	subject { twilio_job }
+	subject { call_job }
 
 	it { should respond_to :phone }
 	it { should respond_to :status }
@@ -18,27 +18,27 @@ describe TwilioJob do
 	it { should be_valid }
 
 	describe "with an invalid number" do
-		before { twilio_job.phone = "555-not-a-number" }
+		before { call_job.phone = "555-not-a-number" }
 		it { should_not be_valid }
 	end
 
 	describe "with an invalid name" do
-		before { twilio_job.name = "" }
+		before { call_job.name = "" }
 		it { should_not be_valid }
 	end
 
 	describe "with an invalid status" do
-		before { twilio_job.status = :not_a_valid_status }
+		before { call_job.status = :not_a_valid_status }
 		it { should be_valid }
 	end
 
 	describe "with an invalid call_sid" do
-		before { twilio_job.call_sid = "a" * 37 }
+		before { call_job.call_sid = "a" * 37 }
 		it { should_not be_valid }
 	end
 
 	describe "body should be limited" do
-		before { twilio_job.body = "a" * 201 }
+		before { call_job.body = "a" * 201 }
 		it { should_not be_valid }
 	end
 end

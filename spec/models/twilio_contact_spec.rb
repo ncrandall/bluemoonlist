@@ -10,7 +10,7 @@ describe TwilioContact do
 	it { should respond_to :call_order }
 	it { should respond_to :name }
 	it { should respond_to :category }
-	it { should respond_to :twilio_job_id }
+	it { should respond_to :call_job_id }
 	it { should respond_to :contacted }
 	it { should respond_to :accepted }
 	it { should respond_to :external_contact_id }

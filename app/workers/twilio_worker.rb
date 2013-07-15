@@ -1,33 +1,33 @@
 class TwilioWorker
-	def begin_twilio_job(twilio_job)
+	def begin_call_job(call_job)
     # execut based on type of job
-    case twilio_job.contact_method
+    case call_job.contact_method
     when 0
-		  update_call_list(twilio_job)
+		  update_call_list(call_job)
     when 1
-      send_text(twilio_job)
+      send_text(call_job)
     end
 	end
 
   # Update the call list, send to call_next_provider
-  def update_call_list(twilio_job, twilio_contact=nil)
+  def update_call_list(call_job, twilio_contact=nil)
 
     #if !twilio_contact.nil?
     #	twilio_contact.contacted = true;
     #	twilio_contact.save
     #end
-    call_next_provider(twilio_job)
+    call_next_provider(call_job)
   end
 
   # If there is a next provider call them
-  def call_next_provider(twilio_job)
-    contact = get_next_uncontacted(twilio_job)
+  def call_next_provider(call_job)
+    contact = get_next_uncontacted(call_job)
 
     if contact.nil?
-      #if it gets here terminate TwilioJob. No more contacts exist
-      twilio_job.delay.make_callback("done")
-      twilio_job.status = :done
-      twilio_job.save
+      #if it gets here terminate CallJob. No more contacts exist
+      call_job.delay.make_callback("done")
+      call_job.status = :done
+      call_job.save
     else
       contact.delay.make_callback("calling")
       path = "twilio/provider_twiml/#{contact.id}.xml"
@@ -62,14 +62,14 @@ class TwilioWorker
 
 
   # Makes a REST call to twilio to send a text message to a provder
-  def send_text(twilio_job)
+  def send_text(call_job)
     from = '+18015131966'
 
     req_params = {
       from: from,
-      to: twilio_job.phone,
+      to: call_job.phone,
       status_callback: "#{ENV['CALL_SERVICE_URL']}twilio/provider_text_status_callback.xml",
-      body: twilio_job.body
+      body: call_job.body
     }
 
     if Rails.env == "development"
@@ -85,8 +85,8 @@ class TwilioWorker
 
   private
   
-  def get_next_uncontacted(twilio_job)
-    twilio_job.twilio_contacts.each do |contact|
+  def get_next_uncontacted(call_job)
+    call_job.twilio_contacts.each do |contact|
       if !contact.contacted?
         return contact
       end

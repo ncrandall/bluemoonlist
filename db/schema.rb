@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130708214710) do
+ActiveRecord::Schema.define(version: 20130715181020) do
+
+  create_table "call_jobs", force: true do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "external_job_id"
+    t.string   "call_sid"
+    t.integer  "contact_method"
+    t.string   "status_callback"
+    t.string   "body"
+  end
+
+  add_index "call_jobs", ["call_sid"], name: "index_call_jobs_on_call_sid", unique: true, using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -131,7 +146,7 @@ ActiveRecord::Schema.define(version: 20130708214710) do
     t.string   "name"
     t.string   "phone"
     t.integer  "call_order"
-    t.integer  "twilio_job_id"
+    t.integer  "call_job_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "contacted",           default: false
@@ -176,21 +191,6 @@ ActiveRecord::Schema.define(version: 20130708214710) do
     t.string   "called_city"
     t.string   "digits"
   end
-
-  create_table "twilio_jobs", force: true do |t|
-    t.string   "name"
-    t.string   "phone"
-    t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "external_job_id"
-    t.string   "call_sid"
-    t.integer  "contact_method"
-    t.string   "status_callback"
-    t.string   "body"
-  end
-
-  add_index "twilio_jobs", ["call_sid"], name: "index_twilio_jobs_on_call_sid", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

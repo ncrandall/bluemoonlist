@@ -6,7 +6,7 @@ class TwilioContact < ActiveRecord::Base
 	validates :call_order, presence: true
 	validates :external_contact_id, presence: true
 
-	belongs_to :twilio_job
+	belongs_to :call_job
 
 	def make_callback(action)
     ContactCallbackService.new(self, action)
